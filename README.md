@@ -102,6 +102,8 @@ classDiagram
   Track --|> Genre: GenreId
 ```
 
+⚠ **Voit vapaasti tutkia tietokannan sisältöä avaamalla sen komentorivityökalulla tai jollain lukuisista graafisista käyttöliittymistä. Älä kuitenkaan muuta `Artist`-taulun sisältöä. Muiden taulujen dataa voit muokata, lisätä ja poistaa vapaasti.**
+
 Voit halutessasi tutustua myös muihin tätä tietokantaa käsitteleviin aineistoihin:
 
 * UML-kaavio: [Chinook-tietokannan Wiki](https://github.com/lerocha/chinook-database/wiki/Chinook-Schema)
@@ -260,7 +262,7 @@ Tehtäväpohjan paketissa [databases.part02](./src/main/java/databases/part02/) 
 
     Tämä luokka toimii uutena pääohjelmana, joka hyödyntää ArtistDAO-luokkaa.
 
-Tällainen vastuunjakaminen seuraa abstraktiuden ja modulaarisuuden periaatteita, mikä tekee sovelluksen kehittämisestä, ylläpidosta ja skaalautuvuudesta helpompaa. Näiden luokkien avulla edellisen tehtävän pääohjelma voisi näyttää seuraavalta:
+Tällainen vastuunjakaminen seuraa abstraktiuden ja modulaarisuuden periaatteita, mikä tekee sovelluksen kehittämisestä, ylläpidosta ja skaalautuvuudesta helpompaa. Näiden luokkien avulla edellisen osa 1:ssä käsitelty pääohjelma voisi näyttää seuraavalta:
 
 ```java
 public static void main(String[] args) {
@@ -268,21 +270,27 @@ public static void main(String[] args) {
     List<Artist> artists = artistDAO.getArtists();
 
     for (Artist artist : artists) {
-        System.out.println(artist);
+        System.out.println(artist.getName() + " (" + artist.getId() + ")");
     }
 }
 ```
 
+Tehtävän tässä osassa sinun tulee toteuttaa [ArtistDAO.java](./src/main/java/databases/part02/ArtistDAO.java)-luokkaan metodit `getArtists` sekä `getArtistById`. Metodien otsikot ja Javadoc-kommentit löytyvät luokasta valmiina.
 
-In this phase, students will refactor their code to use a more structured and object-oriented approach. They will create DAO (Data Access Object) classes and entity classes to improve code organization, testability, and reusability.
+Tällä kertaa ratkaisusi testataan yksikkötesteillä, jotka on kirjoitettu [ArtistDAOTest.java](./src/test/java/databases/part02/ArtistDAOTest.java)-luokkaan. Voit suorittaa testit joko koodieditorisi testaustyökalulla ([VS Code](https://code.visualstudio.com/docs/java/java-testing), [Eclipse](https://www.vogella.com/tutorials/JUnitEclipse/article.html)) tai [Gradle-automaatiotyökalulla](https://docs.gradle.org/current/userguide/java_testing.html):
 
-Tasks:
+```
+./gradlew test --tests ArtistDAOTest      # unix
+gradlew.bat test --tests ArtistDAOTest    # windows
+```
 
-    Create DAO classes for each database table, encapsulating the CRUD operations.
-    Define entity classes to represent the data structures (e.g., Customer, Race, Track).
-    Refactor the main method to utilize DAO classes and entity objects.
-    Implement error handling and exception propagation through the object-oriented layers.
-    Test the application with unit tests to ensure the DAO classes work correctly.
+💡 *Älä muuta testien toiminnan varmistamiseksi valmiiden metodien nimiä, parametreja tai paluuarvojen tyyppejä.*
+
+💡 *Yritä välttää saman koodin toistamista molemmissa metodeissa. Saat toteuttaa tehtävänannossa mainittujen luokkien ja metodien lisäksi myös muita luokkia ja metodeja. Esimerkiksi `Database`-luokka yhteyksien avaamiseksi ja sulkemiseksi voi olla hyvä idea. Metodisi saavat myös kutsua toisiaan: voit kutsua getArtistById-metodissa getArtists-metodia (tehokkuudella ei tässä tehtävässä ole painoarvoa).*
+
+💡 *Yhteyksien sulkeminen "käsin" vaatii monta operaatiota ja koodiriviä. Voit vaihtoehtoisesti perehtyä [Javan try-with-resources](https://www.baeldung.com/java-jdbc)-syntaksiin, jolla saat suljettua resurssit automaattisesti.*
+
+## Osa 3: Tiedon lisääminen, päivittäminen ja poistaminen *(perusteet, 25 %)*
 
 ## Phase 3: Advanced Concepts (Advanced)
 In this final phase, students will explore more advanced concepts in database interaction, such as using try-with-resources for resource management and performing operations involving multiple database tables.
