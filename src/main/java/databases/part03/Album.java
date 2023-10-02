@@ -14,7 +14,7 @@ public class Album {
      * automatically generate an id for the album.
      */
     public Album(String title, long artistId) {
-        this.id = -1; // the database will generate an id for this album
+        this.id = -1; // the database should generate an id for this album
         this.title = title;
         this.artistId = artistId;
     }
@@ -38,12 +38,16 @@ public class Album {
         return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public long getArtistId() {
         return artistId;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setArtistId(long artistId) {
+        this.artistId = artistId;
     }
 
     @Override

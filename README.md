@@ -14,7 +14,7 @@ Tässä tehtävässä hyödynnämme **SQLite**-tietokantaa sen tiedostopohjaisuu
 
 ## SQLite
 
-SQLite-tietokanta on paikallinen muisti- tai tiedostopohjainen tietokanta, joka ei vaadi erillistä palvelinta, vaan se voidaan "sulauttaa" osaksi omaa sovellustamme:
+SQLite-tietokanta on paikallinen muisti- tai tiedostopohjainen tietokanta, joka ei vaadi erillistä palvelinta, vaan se voidaan "sulauttaa" (embed) osaksi omaa sovellustamme:
 
 > *"In contrast to many other database management systems, SQLite is not a client–server database engine. Rather, it is embedded into the end program."*
 >
@@ -112,10 +112,12 @@ Voit halutessasi tutustua myös muihin tätä tietokantaa käsitteleviin aineist
 * SQL-luontikäskyt: [Chinook_Sqlite.sql](https://raw.githubusercontent.com/lerocha/chinook-database/master/ChinookDatabase/DataSources/Chinook_Sqlite.sql)
 * Tietokannan lisenssi: [MIT](https://github.com/lerocha/chinook-database/blob/master/LICENSE.md)
 
+💡 *Jos tulet vahingossa muuttaneeksi tietokantaa ja haluat perua muutoksen, voit palauttaa versionhallinnasta viimeisimmän version komennolla `git restore data/Chinook_Sqlite.sqlite`. Windowsissa muuta kauttaviivan `/` tilalle kenoviiva `\`.*
+
 
 ## Pääohjelman suorittaminen
 
-Tehtäväpohja sisältää pääohjelman [**JdbcDemoMain**](./src/main/java/databases/part01/JdbcDemoMain.java). Tämä pääohjelma auttaa sinua hahmottamaan ja kokeilemaan, miten yhteyksiä muodostetaan ja miten niiden avulla voidaan suorittaa kyselyitä. Voit suorittaa [pääohjelman](./src/main/java/databases/part01/JdbcDemoMain.java) joko koodieditorisi run-painikkeella tai Gradle:n avulla:
+Tehtäväpohja sisältää pääohjelman [**JdbcDemoMain**](./src/main/java/databases/part01/JdbcDemoMain.java). Tämä pääohjelman tarkoitus on auttaa sinua hahmottamaan ja kokeilemaan, miten yhteyksiä muodostetaan ja miten niiden avulla voidaan suorittaa kyselyitä. Voit suorittaa [pääohjelman](./src/main/java/databases/part01/JdbcDemoMain.java) joko koodieditorisi run-painikkeella tai Gradle:n avulla:
 
 ```sh
 ./gradlew run       # Unix
@@ -176,7 +178,7 @@ classDiagram
     class PreparedStatement {
         A precompiled SQL statement with parameters
         +setString(parameterIndex, text)
-        +setInt(parameterIndex, number)
+        +setLong(parameterIndex, number)
         +executeQuery()
         +executeUpdate()
         +close()
@@ -184,9 +186,9 @@ classDiagram
 
     class ResultSet {
         Represents the result set of a query
-        +next(): boolean
+        +next()
         +getString(columnIndex)
-        +getInt(columnIndex)
+        +getLong(columnIndex)
         +close()
     }
 
@@ -202,7 +204,7 @@ Tehtävän ensimmäisessä osassa sinun tulee perehtyä [**JdbcDemoMain**](./src
 
 **Kyselyn muuttaminen**
 
-Tietokantakyselyssä aineisto on järjestetty `ArtistId`-sarakkeen mukaan. Muuta kyselyä siten, että järjestät artistit aakkosjärjestykseen nimen mukaan.
+Annetussa tietokantakyselyssä aineisto on järjestetty `ArtistId`-sarakkeen mukaan. Muuta kyselyä siten, että järjestät artistit aakkosjärjestykseen nimen mukaan.
 
 **Tulosjoukon käsittely**
 
@@ -218,7 +220,7 @@ Academy of St. Martin in the Fields & Sir Neville Marriner (214)
 
 💡 *Nyt artistit ovat hieman eri järjestyksessä ja esim. AC/DC ei ole enää ensimmäisenä.*
 
-Tämä osa tehtävästä tarkastetaan tutkimalla ohjelmasi tulostetta, koska `System.out.println`-kutsuihin perustuvan ohjelmalogiikan testaaminen ohjelmallisesti on hankalaa. Tällainen lähestymistapa rajoittaa myös koodin uudelleenkäyttöä, koska main-metodi ei palauta mitään. Kun tarvitset artistien listausta myöhemmin toisessa osassa ohjelmaa, joudut toistamaan samaa logiikkaa, mikä on virhealtista ja tekee koodista hankalammin ylläpidettävää.
+Tämä osa tehtävästä tarkastetaan tutkimalla ohjelmasi tulostetta, koska `System.out.println`-kutsuihin perustuvan ohjelmalogiikan testaaminen ohjelmallisesti on hankalaa. Tällainen lähestymistapa rajoittaa myös koodin uudelleenkäyttöä, koska `main`-metodi ei palauta mitään. Kun tarvitset artistien listausta myöhemmin toisessa osassa ohjelmaa, joudut toistamaan samaa logiikkaa, mikä on virhealtista ja tekee koodista hankalammin ylläpidettävää.
 
 Parempi tapa on eristää logiikka omiin metodeihinsa, jotta sitä voidaan kutsua ohjelman muista osista tai muista ohjelmista. Ohjelman jakaminen osiin helpottaa siis sen **testaamista** ja tekee koodista **uudelleenkäytettävämpää** ja **ylläpidettävämpää**.
 
@@ -227,16 +229,15 @@ Parempi tapa on eristää logiikka omiin metodeihinsa, jotta sitä voidaan kutsu
 
 Tehtävän toisessa osassa tehtävänäsi on hyödyntää olio-ohjelmointia ja jakaa tietokantaa käyttävät operaatiot tarkoituksenmukaisesti erillisiin luokkiin ja metodeihin.
 
-**DAO (Data Access Object)**
-
 Ohjelman rakenteen ja arkkitehtuurin suunnittelemiseksi on hyviä tunnettuja ja laajasti käytettyjä suunnittelumalleja (pattern), joita noudattamalla tulet soveltaneeksi hyviä käytäntöjä ja koodistasi tulee toivottavasti laadukasta. Ohjelmistokehittäjät noudattavat usein samoja suunnittelumalleja, mikä helpottaa muiden kirjoittamien ohjelmien ymmärtämistä ja koodauskäytäntöjen yhtenäistämistä.
+
+**DAO (Data Access Object)**
 
 Tietokantalogiikan eriyttämiseksi muusta koodista käytetään usein ns. DAO-mallia:
 
 > *"A Data Access Object class can provide access to a particular data resource without coupling the resource's API to the business logic. For example, sample application classes access catalog categories, products, and items using DAO interface `CatalogDAO`."*
 >
 > Oracle. Data Access Object - Also Known As DAO. https://www.oracle.com/java/technologies/data-access-object.html
-
 
 **Tehtävä**
 
@@ -257,9 +258,13 @@ Tehtäväpohjan paketissa [databases.part02](./src/main/java/databases/part02/) 
 
     Tämä luokka toimii uutena pääohjelmana, joka hyödyntää ArtistDAO-luokkaa.
 
-Yllä esitetty vastuunjakaminen seuraa abstraktiuden ja modulaarisuuden periaatteita, mikä tekee sovelluksen kehittämisestä, ylläpidosta ja skaalautuvuudesta helpompaa. Nyt kun ohjelma on jaettu pienempiin osiin, edellisessä osassa kehitetty `main`-metodi saadaan näyttämään paljon yksinkertaisemmalta:
+Yllä esitetty vastuunjakaminen seuraa hyviä periaatteita, jotka tekevät sovelluksen kehittämisestä, ylläpidosta ja skaalautuvuudesta helpompaa. Nyt kun ohjelma on jaettu pienempiin osiin, edellisessä osassa kehitetty `main`-metodi saadaan näyttämään paljon yksinkertaisemmalta:
 
 ```java
+/**
+ * Tämä metodi vastaa toiminnallisesti osassa 1 käsiteltyä metodia, joka
+ * oli paljon pidempi ja monimutkaisempi.
+ */
 public static void main(String[] args) {
     ArtistDAO artistDAO = new ArtistDAO();
     List<Artist> artists = artistDAO.getArtists();
@@ -281,7 +286,7 @@ gradlew.bat test --tests ArtistDAOTest    # windows
 
 💡 *Älä valmiiden metodien nimiä, parametreja tai paluuarvojen tyyppejä. Muutokset saattavat aiheuttaa ongelmia testauksen kanssa.*
 
-💡 *Yritä välttää saman koodin toistamista molemmissa metodeissa. Saat toteuttaa tehtävänannossa mainittujen luokkien ja metodien lisäksi myös muita luokkia ja metodeja. Esimerkiksi `Database`-luokka yhteyksien avaamiseksi ja sulkemiseksi voi olla hyvä idea. Metodisi saavat myös kutsua toisiaan: voit kutsua getArtistById-metodissa getArtists-metodia (tehokkuudella ei tässä tehtävässä ole painoarvoa).*
+💡 *Yritä välttää saman koodin toistamista molemmissa metodeissa, mikäli mahdollista. Saat toteuttaa tehtävänannossa mainittujen luokkien ja metodien lisäksi myös muita luokkia ja metodeja. Esimerkiksi `Database`-luokka yhteyksien avaamiseksi ja sulkemiseksi voi olla hyvä idea. Metodisi saavat myös kutsua toisiaan: voit kutsua getArtistById-metodissa getArtists-metodia (tehokkuudella ei tässä tehtävässä ole painoarvoa).*
 
 💡 *Tulet mahdollisesti huomaamaan, että yhteyksien sulkeminen "käsin" vaatii monta operaatiota ja koodiriviä. Voit vaihtoehtoisesti perehtyä [Javan try-with-resources](https://www.baeldung.com/java-jdbc)-syntaksiin, jolla saat suljettua resurssit automaattisesti.*
 
@@ -292,7 +297,7 @@ Edellisissä osissa olemme hakeneet tietoa `executeQuery`-metodilla. Tällä ker
 
 Tämän projektin paketista [databases.part03](./src/main/java/databases/part03/) löytyy luokat [Album](./src/main/java/databases/part03/Album.java) sekä [AlbumDAO](./src/main/java/databases/part03/AlbumDAO.java). Toteuta [AlbumDAO](./src/main/java/databases/part03/AlbumDAO.java)-luokkaan seuraavat operaatiot: `getAlbumsByArtist`, `addAlbum`, `updateAlbum` ja `deleteAlbum`.
 
-Metodit löytyvät luokasta valmiina, ja niiden kommentit kuvailevat tarkemmin kultakin metodilta vaaditut toiminnot.
+Metodit löytyvät [luokasta](./src/main/java/databases/part03/AlbumDAO.java) valmiina ja niiden kommentit kuvailevat tarkemmin kultakin metodilta vaaditut toiminnot.
 
 
 **SQL-injektiot ja tietoturva**
