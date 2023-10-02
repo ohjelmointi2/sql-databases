@@ -1,10 +1,5 @@
 package databases.part02;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,20 +15,9 @@ public class ArtistDAO {
      */
     public List<Artist> getArtists() {
         List<Artist> artists = new ArrayList<>();
-        try (
-                Connection conn = DriverManager.getConnection(JDBC_CONNECTION_STRING);
-                PreparedStatement statement = conn
-                        .prepareStatement("SELECT ArtistId, Name FROM Artist ORDER BY Name ASC");
-                ResultSet resultSet = statement.executeQuery();) {
 
-            while (resultSet.next()) {
-                Artist artist = getArtist(resultSet);
-                artists.add(artist);
-            }
+        // TODO: Implement this method
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         return artists;
     }
 
@@ -46,20 +30,7 @@ public class ArtistDAO {
      *         that id.
      */
     public Artist getArtistById(long id) {
-        return getArtists()
-                .stream()
-                .filter(a -> a.getId() == id)
-                .findFirst()
-                .orElse(null);
-    }
-
-    /**
-     * Creates an Artist object from the current row in the result set.
-     */
-    private Artist getArtist(ResultSet resultSet) throws SQLException {
-        long id = resultSet.getLong("ArtistId");
-        String name = resultSet.getString("Name");
-
-        return new Artist(id, name);
+        // TODO: Implement this method
+        return null;
     }
 }

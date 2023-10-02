@@ -5,7 +5,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+/**
+ * A simple application that prints all artists in the Chinook database.
+ * This version uses JDBC directly, and the result is verbose, hard to test and
+ * not reusable. We'll improve this in the next part.
+ */
 public class JdbcDemoMain {
+
     /*
      * The JDBC connection string defining the database to connect to. In this case,
      * we are connecting to a SQLite database stored in the /data directory. JDBC
@@ -16,6 +22,11 @@ public class JdbcDemoMain {
 
     public static void main(String[] args) {
 
+        /*
+         * These variables are declared outside of the try block so they can be closed
+         * in the finally block. This ensures that the resources are closed even if an
+         * exception is thrown and the try block is exited early.
+         */
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;

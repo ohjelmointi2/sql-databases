@@ -102,7 +102,7 @@ classDiagram
   Track --|> Genre: GenreId
 ```
 
-⚠ **Voit vapaasti tutkia tietokannan sisältöä avaamalla sen komentorivityökalulla tai jollain lukuisista graafisista käyttöliittymistä. Älä kuitenkaan muuta `Artist`-taulun sisältöä. Muiden taulujen dataa voit muokata, lisätä ja poistaa vapaasti.**
+⚠ **Voit vapaasti tutkia tietokannan sisältöä avaamalla [SQLite-komentorivityökalulla](https://sqlite.org/cli.html) tai jollain [lukuisista graafisista käyttöliittymistä](https://www.google.com/search?q=sqlite+gui). Älä kuitenkaan muuta `Artist`-taulun sisältöä. Muiden taulujen dataa voit muokata, lisätä ja poistaa vapaasti.**
 
 Voit halutessasi tutustua myös muihin tätä tietokantaa käsitteleviin aineistoihin:
 
@@ -111,16 +111,6 @@ Voit halutessasi tutustua myös muihin tätä tietokantaa käsitteleviin aineist
 * Dokumentaatio: https://github.com/lerocha/chinook-database
 * SQL-luontikäskyt: [Chinook_Sqlite.sql](https://raw.githubusercontent.com/lerocha/chinook-database/master/ChinookDatabase/DataSources/Chinook_Sqlite.sql)
 * Tietokannan lisenssi: [MIT](https://github.com/lerocha/chinook-database/blob/master/LICENSE.md)
-
-<!--
-* [SQLite tools -video](https://video.haaga-helia.fi/media/SQLite+tools/0_pez4r54j)
-
-    Samaa Chinook-tietokantaa käytetään tässä [SQLite tools -videossa](https://video.haaga-helia.fi/media/SQLite+tools/0_pez4r54j). Tästä videosta voi olla sinulle hyötyä myös tämän tehtävän tekemisessä.
-
-* [SQLite tools -komentorivityökalut](https://sqlite.org/download.html)
-
-    Tietokannan käyttäminen komentoriviltä ei ole välttämättä tarpeellista harjoitustyön tekemiseksi, mutta voit halutessasi ladata SQLite tools -ohjelman Windows-, Linux- tai macOS -version yllä olevasta linkistä.
--->
 
 
 ## Pääohjelman suorittaminen
@@ -201,7 +191,6 @@ classDiagram
     DriverManager --> Connection: obtains
     Connection --> PreparedStatement: creates
     PreparedStatement --> ResultSet: executes
-
 ```
 
 
@@ -215,22 +204,24 @@ Tietokantakyselyssä aineisto on järjestetty `ArtistId`-sarakkeen mukaan. Muuta
 
 **Tulosjoukon käsittely**
 
-Pääohjelman alkuperäisessä versiossa jokaisen artistin kohdalla tulostetaan artistin nimi. Muuta ohjelmaa siten, että samalle riville, artistin nimen jälkeen, tulostetaan myös artistin id (`ArtistId`).
+Pääohjelman alkuperäisessä versiossa jokaisen artistin kohdalla tulostetaan artistin nimi. Muuta ohjelmaa siten, että samalle riville, artistin nimen jälkeen, tulostetaan myös artistin id (`ArtistId`):
 
 ```
+A Cor Do Som (43)
 AC/DC (1)
-Accept (2)
-Aerosmith (3)
-Alanis Morissette (4)
-Alice In Chains (5)
+Aaron Copland & London Symphony Orchestra (230)
+Aaron Goldberg (202)
+Academy of St. Martin in the Fields & Sir Neville Marriner (214)
 ```
 
-Tämä osa tehtävästä tarkastetaan tutkimalla ohjelmasi tulostetta, koska `System.out.println`-kutsuihin perustuvan ohjelmalogiikan testaaminen ohjelmallisesti on hankalaa. Tällainen lähestymistapa rajoittaa myös koodin uudelleenkäyttöä, koska metodi ei palauta mitään. Jos joku tarvitsee artistien listausta myöhemmin toisessa osassa ohjelmaa, hän joutuu toistamaan samaa logiikkaa, mikä on virhealtista ja tekee koodista hankalammin ylläpidettävää.
+💡 *Nyt artistit ovat hieman eri järjestyksessä ja esim. AC/DC ei ole enää ensimmäisenä.*
+
+Tämä osa tehtävästä tarkastetaan tutkimalla ohjelmasi tulostetta, koska `System.out.println`-kutsuihin perustuvan ohjelmalogiikan testaaminen ohjelmallisesti on hankalaa. Tällainen lähestymistapa rajoittaa myös koodin uudelleenkäyttöä, koska main-metodi ei palauta mitään. Kun tarvitset artistien listausta myöhemmin toisessa osassa ohjelmaa, joudut toistamaan samaa logiikkaa, mikä on virhealtista ja tekee koodista hankalammin ylläpidettävää.
 
 Parempi tapa on eristää logiikka omiin metodeihinsa, jotta sitä voidaan kutsua ohjelman muista osista tai muista ohjelmista. Ohjelman jakaminen osiin helpottaa siis sen **testaamista** ja tekee koodista **uudelleenkäytettävämpää** ja **ylläpidettävämpää**.
 
 
-## Osa 2: Olioihin perustuva lähestymistapa *(perusteet, 30 %)*
+## Osa 2: Olioihin perustuva lähestymistapa *(perusteet, 40 %)*
 
 Tehtävän toisessa osassa tehtävänäsi on hyödyntää olio-ohjelmointia ja jakaa tietokantaa käyttävät operaatiot tarkoituksenmukaisesti erillisiin luokkiin ja metodeihin.
 
@@ -290,192 +281,77 @@ gradlew.bat test --tests ArtistDAOTest    # windows
 
 💡 *Yhteyksien sulkeminen "käsin" vaatii monta operaatiota ja koodiriviä. Voit vaihtoehtoisesti perehtyä [Javan try-with-resources](https://www.baeldung.com/java-jdbc)-syntaksiin, jolla saat suljettua resurssit automaattisesti.*
 
-## Osa 3: Tiedon lisääminen, päivittäminen ja poistaminen *(perusteet, 25 %)*
 
-## Phase 3: Advanced Concepts (Advanced)
-In this final phase, students will explore more advanced concepts in database interaction, such as using try-with-resources for resource management and performing operations involving multiple database tables.
+## Osa 3: Tiedon lisääminen, päivittäminen ja poistaminen *(soveltaminen, 40 %)*
 
-Tasks:
+Edellisissä osissa olemme hakeneet tietoa `executeQuery`-metodilla. Tällä kertaa tarkoituksena on lisätä, päivittää ja poistaa tietoa `executeUpdate`-metodilla.
 
-    Refactor code to use try-with-resources for efficient resource management (e.g., closing connections, statements, and result sets).
-    Implement a complex SQL query that involves joining multiple database tables (e.g., fetching race details along with associated tracks).
-    Enhance error handling to provide meaningful error messages and log exceptions.
-    Develop a more extensive testing suite, including integration tests for multi-table operations.
+Tämän projektin paketista [databases.part03](./src/main/java/databases/part03/) löytyy luokat [Album](./src/main/java/databases/part03/Album.java) sekä [AlbumDAO](./src/main/java/databases/part03/AlbumDAO.java). Toteuta [AlbumDAO](./src/main/java/databases/part03/AlbumDAO.java)-luokkaan seuraavat operaatiot: `getAlbumsByArtist`, `addAlbum`, `updateAlbum` ja `deleteAlbum`.
 
-By splitting the exercise into these three phases, students can gradually build their skills and understanding of JDBC while working towards a more robust and maintainable codebase. This approach also aligns with the principles of software development, emphasizing code modularity, object-oriented design, and error handling best practices.
-
-## Advanced Concepts (Advanced)
-
-Alternatively, you can introduce environment variables in the advanced phase when covering more advanced topics like efficient resource management (try-with-resources). This approach assumes that students are already familiar with the basics of JDBC and are now enhancing their application's robustness and scalability.
-
-Tasks:
-
-    Incorporate environment variables for the JDBC connection string and credentials as part of improving the code's overall quality and security.
-    Emphasize the importance of securing sensitive information and managing environment variables effectively.
-    Show how to set and manage environment variables in different environments (e.g., local development, production servers).
-
-The choice of phase depends on your course's structure and the progression of skills you want your students to achieve. Introducing environment variables in the intermediate phase may be more beneficial if you want to emphasize good practices early on, but it might add some complexity to the learning process. On the other hand, introducing it in the advanced phase assumes that students have a solid foundation and are now focusing on advanced concepts, including secure and efficient application design.
-
-Submission:
-Submit your Java project, which includes the Java classes, the SQLite database file, and a README file that explains how to run your code and any assumptions you made during implementation.
-
-Grading Criteria:
-Your assignment will be graded based on the following criteria:
-
-    Successful connection to the database.
-    Correct retrieval, insertion, updating, and deletion of data.
-    Implementation of a complex SQL query (if applicable).
-    Proper error handling and exception management.
-    Code readability and organization.
+Metodit löytyvät luokasta valmiina, ja niiden kommentit kuvailevat tarkemmin kultakin metodilta vaaditut toiminnot.
 
 
-## JDBC-luokat
+**SQL-injektiot ja tietoturva**
+
+Huomaa, että SQL-kyselyjen muodostaminen merkkijonoja yhdistelemällä aiheuttaa tietoturvaongelmia, kuten alla oleva esimerkki havainnollistaa:
+
+[![Exploits of a Mom](https://imgs.xkcd.com/comics/exploits_of_a_mom.png)](https://xkcd.com/327/)
+
+*Kuva: Randall Munroe. Exploits of a Mom. [https://xkcd.com/327/](https://xkcd.com/327/). [CC BY-NC 2.5](https://creativecommons.org/licenses/by-nc/2.5/)*
+
+Muista siis käyttää oppimateriaaleissa esiteltyä `PreparedStatement`-luokkaa ja sen `set`-metodeita aina muodostaessasi kyselyitä, joihin syötetään mukaan dataa!
 
 
+**Ratkaisun testaaminen**
 
+Albumien käsittelemiseksi ei ole valmista pääohjelmaa, mutta voit halutessasi luoda uuden pääohjelman, muokata edellisen osan ohjelmaa tai hyödyntää [tämän osan tarkastamiseksi kirjoitettuja yksikkötestejä](TODO). Testit voidaan suorittaa tuttuun tapaan koodieditorilla tai Gradlella:
 
-## Tietokannan entiteetit
-
-
-
-
-
-
-## SQL-luontikäskyt
-
-```sql
-CREATE TABLE [Album]
-(
-    [AlbumId] INTEGER  NOT NULL,
-    [Title] NVARCHAR(160)  NOT NULL,
-    [ArtistId] INTEGER  NOT NULL,
-    CONSTRAINT [PK_Album] PRIMARY KEY  ([AlbumId]),
-    FOREIGN KEY ([ArtistId]) REFERENCES [Artist] ([ArtistId])
-                ON DELETE NO ACTION ON UPDATE NO ACTION
-);
-
-CREATE TABLE [Artist]
-(
-    [ArtistId] INTEGER  NOT NULL,
-    [Name] NVARCHAR(120),
-    CONSTRAINT [PK_Artist] PRIMARY KEY  ([ArtistId])
-);
-
-CREATE TABLE [Track]
-(
-    [TrackId] INTEGER  NOT NULL,
-    [Name] NVARCHAR(200)  NOT NULL,
-    [AlbumId] INTEGER,
-    [MediaTypeId] INTEGER  NOT NULL,
-    [GenreId] INTEGER,
-    [Composer] NVARCHAR(220),
-    [Milliseconds] INTEGER  NOT NULL,
-    [Bytes] INTEGER,
-    [UnitPrice] NUMERIC(10,2)  NOT NULL,
-    CONSTRAINT [PK_Track] PRIMARY KEY  ([TrackId]),
-    FOREIGN KEY ([AlbumId]) REFERENCES [Album] ([AlbumId])
-                ON DELETE NO ACTION ON UPDATE NO ACTION,
-    FOREIGN KEY ([GenreId]) REFERENCES [Genre] ([GenreId])
-                ON DELETE NO ACTION ON UPDATE NO ACTION,
-    FOREIGN KEY ([MediaTypeId]) REFERENCES [MediaType] ([MediaTypeId])
-                ON DELETE NO ACTION ON UPDATE NO ACTION
-);
+```
+./gradlew test --tests AlbumDAOTest      # unix
+gradlew.bat test --tests AlbumDAOTest    # windows
 ```
 
 
-## Esimerkkidata
+## 🚀 Pro task: "kovakoodattu" yhteysosoite ympäristömuuttujaan
 
-```
-sqlite> select * from Artist limit 5;
-ArtistId  Name
---------  -----------------
-1         AC/DC
-2         Accept
-3         Aerosmith
-4         Alanis Morissette
-5         Alice In Chains
-```
-```
-sqlite> select * from Album limit 5;
-AlbumId  Title                                  ArtistId
--------  -------------------------------------  --------
-1        For Those About To Rock We Salute You  1
-2        Balls to the Wall                      2
-3        Restless and Wild                      2
-4        Let There Be Rock                      1
-5        Big Ones                               3
+Usein samaa koodia suoritetaan lukuisissa erilaisissa ympäristöissä, kuten useiden eri kehittäjien omilla Windows-, Mac- ja Linux- koneilla. Kehittäjien henkilökohtaisten koneiden lisäksi saman koodin täytyy toimia testaus-, staging- ja tuotantoympäristössä, joka saattaa sijaita pilvipalvelussa tai omassa konesalissa. Eri ympäristöissä käytetään eri tietokantoja ja asetuksia, joten niissä tarvitaan eri yhteysosoitteet, käyttäjätunnukset ja muita muuttuvia tietoja esimerkiksi tietokantojen käyttämiseksi.
+
+Ympäristökohtaisia asetuksia ei kirjoiteta suoraan ohjelmakoodiin, jotta koodia ei jouduta muuttamaan, kääntämään ja paketoimaan jokaista suoritusympäristöä varten.
+
+Käyttäessämme SQLite-tietokantaa emme tarvitse erillisiä tunnuksia, koska tietokanta on käytännössä vain tiedosto paikallisessa järjestelmässä. Monien muiden tietokantaratkaisujen käyttämiseksi tarvitsisimme kuitenkin käyttäjätunnuksia ja salasanoja. Salasanoja ei koskaan haluta tallentaa selkokielisinä ohjelmakoodiin tai versionhallintaan.
+
+Yleinen tapa ratkaista edellä esitettyjä ongelmia on asettaa ympäristökohtaisesti vaihtuvat sekä salaiset arvot käyttöjärjestelmän ympäristömuuttujiin. Sovellus voi ympäristömuuttujien avulla käyttää esimerkiksi kehitys-, testi- tai tuotantokantaa ilman, että ohjelmakoodia muutetaan. Salaiset tiedot, kuten salasanat, jäävät myös pois ohjelmakoodista.
+
+Ympäristömuuttujat ovat eräänlainen käyttöjärjestelmäkohtainen Map-tietorakenne, jossa eri arvoja voidaan käsitellä avainten, eli ympäristömuuttujien nimien, avulla. Ympäristömuuttujien arvoja voidaan Javassa lukea `System.getenv`-metodilla esimerkiksi seuraavasti.
+
+```diff
++ // merkkijono luetaan DATABASE-nimisestä ympäristömuuttujasta:
++ String connectionUrl = System.getenv("DATABASE");
+
+- // kovakoodattu yhteysosoite:
+- String connectionUrl = "jdbc:sqlite:data/Chinook_Sqlite.sqlite";
 ```
 
-```
-sqlite> select Name, AlbumId from Track limit 5;
-Name                                     AlbumId
----------------------------------------  -------
-For Those About To Rock (We Salute You)  1
-Balls to the Wall                        2
-Fast As a Shark                          3
-Restless and Wild                        3
-Princess of the Dawn                     3
-```
-## Esimerkkikoodi
+💡 *Huom! Tehtävien automaattisen arvioinnin vuoksi älä käytä ympäristömuuttujaa tehtävän palautuksessa.*
 
-```java
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
-public class FetchVideosFromDatabase {
-    public static void main(String[] args) {
-        // JDBC URL for SQLite database (change this to your database file location)
-        String url = "jdbc:sqlite:/path/to/your/database.db";
+### Ympäristömuuttujien asettaminen
 
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
+Voit asettaa VS Code:ssa ympäristömuuttujan muuttamalla ["Run and debug"-asetuksia](https://code.visualstudio.com/docs/java/java-debugging#_configuration-options) (ks. kohta `env`). Eclipsessä voit lisätä ohjelmallesi ympäristömuuttujia tämän [Stack Overflow -ketjun](https://stackoverflow.com/a/12810433) ohjeiden mukaisesti. Pidempi ohje löytyy tarvittaessa esimerkiksi [javacodegeeks.com:ista](https://examples.javacodegeeks.com/desktop-java/ide/eclipse/eclipse-environment-variable-setup-example/).
 
-        try {
-            // Create a connection to the database
-            connection = DriverManager.getConnection(url);
+Vaihtoehtoisesti ympäristömuuttujia voidaan määritellä koko järjestelmän tasolla:
 
-            // SQL query to fetch all videos and their titles
-            String sql = "SELECT Title FROM Videos";
+* [Windowsissa](https://www.google.com/search?q=windows+set+environment+variable)
+* [Linuxissa](https://www.google.com/search?q=linux+set+environment+variable)
+* [MacOS:ssa](https://www.google.com/search?q=macos+set+environment+variable).
 
-            // Create a prepared statement
-            preparedStatement = connection.prepareStatement(sql);
+Tällä kurssilla voi kuitenkin olla yksinkertaista asettaa ympäristömuuttuja vain omaan koodieditoriisi.
 
-            // Execute the query and get the result set
-            resultSet = preparedStatement.executeQuery();
-
-            // Iterate through the result set and print video titles
-            while (resultSet.next()) {
-                String title = resultSet.getString("Title");
-                System.out.println("Video Title: " + title);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                // Close the result set, prepared statement, and connection in the finally block
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-}
-```
-
-## 🚀 Pro task: tietokannan yhteysosoite ympäristömuuttujaan
 
 ## 🚀 Pro task: Try-with-resources
+
+Yhteyksien sulkeminen "käsin" vaatii monta operaatiota ja koodiriviä. Voit vaihtoehtoisesti perehtyä [Javan try-with-resources](https://www.baeldung.com/java-jdbc)-syntaksiin, jolla saat suljettua resurssit automaattisesti.
+
 
 ----
 
@@ -485,6 +361,7 @@ public class FetchVideosFromDatabase {
 Tämän tehtävän on kehittänyt Teemu Havulinna ja se on lisensoitu [Creative Commons BY-NC-SA -lisenssillä](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 Tehtävänannon, käsiteltävien tiedostojen sekä lähdekoodien toteutuksessa on hyödynnetty ChatGPT 3.5:ttä sekä GitHub copilot-tekoälyavustinta.
+
 
 ## Chinook-tietokanta
 
