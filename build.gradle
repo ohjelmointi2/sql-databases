@@ -25,13 +25,13 @@ dependencies {
     // Use JUnit Jupiter for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
 
-    // This dependency is used by the application.
-    implementation 'com.google.guava:guava:31.1-jre'
+    // https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
+    implementation 'org.xerial:sqlite-jdbc:3.43.0.0'
 }
 
 application {
     // Define the main class for the application.
-    mainClass = 'gradle.template.App'
+    mainClass = 'databases.part01.JdbcDemoMain'
 }
 
 tasks.named('test') {
