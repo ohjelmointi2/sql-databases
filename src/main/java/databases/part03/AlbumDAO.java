@@ -14,7 +14,8 @@ public class AlbumDAO {
      * If there are no albums in the database
      *
      * @param artist the artist whose albums to retrieve.
-     * @return a list of all albums that have the specified artist as the artist.
+     * @return a list of all albums that have the specified artist as the artist,
+     *         sorted by AlbumId in ascending order.
      */
     public List<Album> getAlbumsByArtist(Artist artist) {
         // hint: use the artist.getId() method to get the artist's id and add it

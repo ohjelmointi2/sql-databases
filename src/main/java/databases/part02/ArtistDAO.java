@@ -16,7 +16,11 @@ public class ArtistDAO {
     public List<Artist> getArtists() {
         List<Artist> artists = new ArrayList<>();
 
-        // TODO: Implement this method
+        /*
+         * hint: see the class from part 1 for an example of how to connect to the
+         * database and retrieve data from it. Create new Artist objects instead of
+         * printing the results to the console.
+         */
 
         return artists;
     }
@@ -30,7 +34,13 @@ public class ArtistDAO {
      *         that id.
      */
     public Artist getArtistById(long id) {
-        // TODO: Implement this method
+        /*
+         * hint: use similar code to the getArtists() method above, but add a WHERE
+         * clause to the SQL query to only retrieve the artist with the specified id.
+         * You can also just call the getArtists() method above and iterate through the
+         * results until you find the artist with the specified id. This is less
+         * efficient, but it gets the job done and is easy to implement.
+         */
         return null;
     }
 }

@@ -33,7 +33,7 @@ SQLite toimii Java-ohjelman näkökulmasta samalla tavalla kuin erilliset tietok
 
 SQLiten kanssa emme tarvitse erillistä tietokantapalvelinta, joten meidän ei tarvitse huolehtia verkkoyhteyksistä tai salasanoista. SQLite ei myöskään edellytä asennuksia, vaan riittää, että lisäämme [SQLite-ajurin](https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc/latest) Java-projektiimme.
 
-SQLite-ajuri, kuten muutkin riippuvuudet, [voidaan ladata itse verkosta ja sijoittaa projektin hakemistoihin](https://www.google.com/search?q=add+jar+file+to+build+path). Riippuvuuksien hallinta on kuitenkin huomattavasti helpompaa, mikäli käytämme automaatiotyökalua kuten Gradle tai Maven. Tässä tehtäväpohjassa riippuvuus on valmiiksi määritettynä Gradle:n build.gradle-tiedostoon, joten riippuvuuden lataaminen ja tarvittavat asetukset tapahtuvat automaattisesti<sup>1</sup>:
+SQLite-ajuri, kuten muutkin riippuvuudet, [voidaan ladata itse verkosta ja sijoittaa projektin hakemistoihin](https://www.google.com/search?q=add+jar+file+to+build+path). Riippuvuuksien hallinta on kuitenkin huomattavasti helpompaa, mikäli käytämme automaatiotyökalua kuten Gradle tai Maven. Tässä tehtäväpohjassa riippuvuus on valmiiksi määritettynä Gradle:n [build.gradle](./build.gradle)-tiedostoon, josta koodieditorisi osaa asentaa sen automaattisesti<sup>1</sup>:
 
 ```groovy
 dependencies {
@@ -42,7 +42,7 @@ dependencies {
 }
 ```
 
-SQLite ei poikkea ajurin osalta muista tietokannoista. Käyttäessäsi MySQL-tietokantaa lisäisit riippuvuudeksi esimerkiksi. `'com.mysql:mysql-connector-j:8.1.0'`. Kaikki tämän tehtävän koodit toimivatkin myös esim. MySQL-tietokannoilla, kunhan käytät oikeaa ajuria ja yhteysosoitetta.
+💡 *SQLite ei poikkea ajurin osalta muista tietokannoista. Käyttäessäsi MySQL-tietokantaa lisäisit riippuvuudeksi esimerkiksi. `'com.mysql:mysql-connector-j:8.1.0'`. Kaikki tämän tehtävän koodit toimivatkin myös esim. MySQL-tietokannoilla, kunhan käytät oikeaa ajuria ja yhteysosoitetta.*
 
 <small><sup>1</sup> 🤞 toivottavasti</small>
 
@@ -59,7 +59,7 @@ Käytämme tässä tehtävässä valmista musiikkitietokantaa nimeltä [**Chinoo
 
 Chinook-tietokanta sijaitsee valmiiksi tämän tehtäväpohjan [data](./data/)-hakemistossa.
 
-Chinook-tietokanta sisältää lukuisia tietokantatauluja ja paljon valmista dataa, mutta tässä harjoituksessa käytämme ainoastaan `Artist`-, `Album`- ja `Track`-tauluja. Kaikki muut taulut voit jättää harjoitustyössäsi huomioimatta.
+Chinook-tietokanta sisältää lukuisia tietokantatauluja ja paljon valmista dataa, mutta tässä harjoituksessa käytämme ainoastaan `Artist`- ja `Album`-tauluja. Kaikki muut taulut voit jättää harjoitustyössäsi huomioimatta:
 
 ```mermaid
 classDiagram
@@ -102,7 +102,7 @@ classDiagram
   Track --|> Genre: GenreId
 ```
 
-⚠ **Voit vapaasti tutkia tietokannan sisältöä avaamalla [SQLite-komentorivityökalulla](https://sqlite.org/cli.html) tai jollain [lukuisista graafisista käyttöliittymistä](https://www.google.com/search?q=sqlite+gui). Älä kuitenkaan muuta `Artist`-taulun sisältöä. Muiden taulujen dataa voit muokata, lisätä ja poistaa vapaasti.**
+💡 *Voit vapaasti tutkia tietokannan sisältöä avaamalla sen [SQLite-komentorivityökalulla](https://sqlite.org/cli.html) tai jollain [lukuisista graafisista käyttöliittymistä](https://www.google.com/search?q=sqlite+gui). Älä kuitenkaan muuta `Artist`-taulun sisältöä. Muiden taulujen dataa voit muokata, lisätä ja poistaa vapaasti.*
 
 Voit halutessasi tutustua myös muihin tätä tietokantaa käsitteleviin aineistoihin:
 
@@ -115,7 +115,7 @@ Voit halutessasi tutustua myös muihin tätä tietokantaa käsitteleviin aineist
 
 ## Pääohjelman suorittaminen
 
-Tehtäväpohja sisältää valmiin pääohjelman [**JdbcDemoMain**](./src/main/java/databases/part01/JdbcDemoMain.java). Valmis pääohjelma auttaa sinua hahmottamaan ja kokeilemaan, miten yhteyksiä muodostetaan ja miten niiden avulla voidaan suorittaa kyselyitä. Voit suorittaa [pääohjelman](./src/main/java/databases/part01/JdbcDemoMain.java) joko koodieditorisi run-painikkeella tai Gradle:n avulla:
+Tehtäväpohja sisältää pääohjelman [**JdbcDemoMain**](./src/main/java/databases/part01/JdbcDemoMain.java). Tämä pääohjelma auttaa sinua hahmottamaan ja kokeilemaan, miten yhteyksiä muodostetaan ja miten niiden avulla voidaan suorittaa kyselyitä. Voit suorittaa [pääohjelman](./src/main/java/databases/part01/JdbcDemoMain.java) joko koodieditorisi run-painikkeella tai Gradle:n avulla:
 
 ```sh
 ./gradlew run       # Unix
@@ -133,27 +133,29 @@ Alice In Chains
 ...
 ```
 
+Tehtävän seuraavissa vaiheissa tätä tulostetta muutetaan hieman.
+
+
 ## JDBC:n perusteet
 
 Tietokantaoperaatiot tehdään JDBC:ssä kolmen keskeisen luokan avulla: **Connection**, **PreparedStatement** ja **ResultSet**. Näillä kolmella on keskeinen rooli tietokantaan yhteyden muodostamisessa, tietokantakyselyiden suorittamisessa ja tulosten käsittelyssä.
 
-1. **Connection (yhteys):**
+1. **[Connection (yhteys)](https://docs.oracle.com/javase/8/docs/api/java/sql/Connection.html)**
     - Yhteys mahdollistaa sovelluksen ja tietokannan välisen vuorovaikutuksen.
     - Yhteydenmuodostus vaatii tietokannan tiedot, kuten SQLite-tiedoston sijainnin. Se voi vaatia myös mm. tietokantapalvelimen osoitteen, käyttäjätunnuksen ja salasanan.
     - Yhteys tulee sulkea käytön jälkeen, jotta käytössä olevat resurssit vapautuvat uudelleenkäytettäviksi.
 
-2. **PreparedStatement (SQL-lauseke):**
+2. **[PreparedStatement (SQL-lauseke)](https://docs.oracle.com/javase/8/docs/api/java/sql/PreparedStatement.html)**
     - Tapa suorittaa SQL-kyselyitä tietokannassa Java-sovelluksessa.
     - Mahdollistaa SQL-kyselyjen parametrien syöttämisen turvallisesti.
     - Auttaa estämään SQL-injektiota.
 
-3. **ResultSet (tulokset):**
+3. **[ResultSet (tulokset)](https://docs.oracle.com/javase/8/docs/api/java/sql/ResultSet.html)**
     - ResultSet on tietokannasta saatava tulosjoukko, joka sisältää kyselyn tulokset.
     - ResultSetissä tiedot ovat organisoituina riveihin ja sarakkeisiin.
-    - Java-sovellus voi lukea ResultSetistä tietoja ja käsitellä niitä tarpeen mukaan.
     - Tulostaulukkoa käytetään tavallisesti silmukan avulla, joka kulkee läpi tulokset ja noutaa tarvittavat tiedot.
 
-Nämä luokat ja niiden väliset suhteet on havainnoillistettu seuraavassa kaaviossa:
+Nämä luokat ja niiden väliset suhteet on havainnollistettu seuraavassa kaaviossa:
 
 ```mermaid
 classDiagram
@@ -243,17 +245,19 @@ Tehtäväpohjan paketissa [databases.part02](./src/main/java/databases/part02/) 
 
 1. **Artist.java:**
 
-    Tämä luokka edustaa "Artist" -mallia (model) tai entiteettiä (entity). Luokka attribuutit ja metodit, jotka määrittelevät artistin rakenteen ja käyttäytymisen. Toisin sanoen se kapseloi artistin tiedot ja ominaisuudet, kuten artistin nimen ja id:n.
+    Tämä luokka edustaa yksittäisiä artisteja sovelluksessa ja on "aivan tavallinen" luokka. Luokassa ei ole tietokanta- eikä käyttöliittymälogiikkaa. Tällaisesta luokasta käytetään usein nimitystä *model* tai *entity*.
 
 2. **ArtistDAO.java:**
 
     ArtistDAO (Data Access Object) -luokka toimii välittäjänä sovelluksen liiketoimintalogiikan ja tietokannan välillä. Sen pääasiallinen tehtävä on tarjota metodeja tietokantaoperaatioihin, jotka liittyvät "Artist" -entiteettiin, kuten artistien luontiin, hakemiseen, päivittämiseen ja poistamiseen. Se helpottaen muun sovelluksen työskentelyä tietokannan kanssa ilman tarvetta tuntea taustalla olevaa SQL:ää tai tietokantaan liittyviä yksityiskohtia.
 
+    💡 *ArtistDAO-luokan rooli on ainoastaan toimia välittäjänä tietokannan ja sovelluslogiikan välillä, joten tässä luokassa ei ole lainkaan käyttöliittymään liittyvää logiikkaa, kuten tulosteita.*
+
 3. **ArtistAppMain.java:**
 
     Tämä luokka toimii uutena pääohjelmana, joka hyödyntää ArtistDAO-luokkaa.
 
-Tällainen vastuunjakaminen seuraa abstraktiuden ja modulaarisuuden periaatteita, mikä tekee sovelluksen kehittämisestä, ylläpidosta ja skaalautuvuudesta helpompaa. Näiden luokkien avulla edellisen osa 1:ssä käsitelty pääohjelma voisi näyttää seuraavalta:
+Yllä esitetty vastuunjakaminen seuraa abstraktiuden ja modulaarisuuden periaatteita, mikä tekee sovelluksen kehittämisestä, ylläpidosta ja skaalautuvuudesta helpompaa. Nyt kun ohjelma on jaettu pienempiin osiin, edellisessä osassa kehitetty `main`-metodi saadaan näyttämään paljon yksinkertaisemmalta:
 
 ```java
 public static void main(String[] args) {
@@ -270,16 +274,16 @@ Tehtävän tässä osassa sinun tulee toteuttaa [ArtistDAO.java](./src/main/java
 
 Tällä kertaa ratkaisusi testataan yksikkötesteillä, jotka on kirjoitettu [ArtistDAOTest.java](./src/test/java/databases/part02/ArtistDAOTest.java)-luokkaan. Voit suorittaa testit joko koodieditorisi testaustyökalulla ([VS Code](https://code.visualstudio.com/docs/java/java-testing), [Eclipse](https://www.vogella.com/tutorials/JUnitEclipse/article.html)) tai [Gradle-automaatiotyökalulla](https://docs.gradle.org/current/userguide/java_testing.html):
 
-```
+```sh
 ./gradlew test --tests ArtistDAOTest      # unix
 gradlew.bat test --tests ArtistDAOTest    # windows
 ```
 
-💡 *Älä muuta testien toiminnan varmistamiseksi valmiiden metodien nimiä, parametreja tai paluuarvojen tyyppejä.*
+💡 *Älä valmiiden metodien nimiä, parametreja tai paluuarvojen tyyppejä. Muutokset saattavat aiheuttaa ongelmia testauksen kanssa.*
 
 💡 *Yritä välttää saman koodin toistamista molemmissa metodeissa. Saat toteuttaa tehtävänannossa mainittujen luokkien ja metodien lisäksi myös muita luokkia ja metodeja. Esimerkiksi `Database`-luokka yhteyksien avaamiseksi ja sulkemiseksi voi olla hyvä idea. Metodisi saavat myös kutsua toisiaan: voit kutsua getArtistById-metodissa getArtists-metodia (tehokkuudella ei tässä tehtävässä ole painoarvoa).*
 
-💡 *Yhteyksien sulkeminen "käsin" vaatii monta operaatiota ja koodiriviä. Voit vaihtoehtoisesti perehtyä [Javan try-with-resources](https://www.baeldung.com/java-jdbc)-syntaksiin, jolla saat suljettua resurssit automaattisesti.*
+💡 *Tulet mahdollisesti huomaamaan, että yhteyksien sulkeminen "käsin" vaatii monta operaatiota ja koodiriviä. Voit vaihtoehtoisesti perehtyä [Javan try-with-resources](https://www.baeldung.com/java-jdbc)-syntaksiin, jolla saat suljettua resurssit automaattisesti.*
 
 
 ## Osa 3: Tiedon lisääminen, päivittäminen ja poistaminen *(soveltaminen, 40 %)*
@@ -299,12 +303,12 @@ Huomaa, että SQL-kyselyjen muodostaminen merkkijonoja yhdistelemällä aiheutta
 
 *Kuva: Randall Munroe. Exploits of a Mom. [https://xkcd.com/327/](https://xkcd.com/327/). [CC BY-NC 2.5](https://creativecommons.org/licenses/by-nc/2.5/)*
 
-Muista siis käyttää oppimateriaaleissa esiteltyä `PreparedStatement`-luokkaa ja sen `set`-metodeita aina muodostaessasi kyselyitä, joihin syötetään mukaan dataa!
+Muista siis käyttää oppimateriaaleissa esiteltyä `PreparedStatement`-luokkaa ja sen `setString`-, `setLong`- ja muita metodeita aina lisätessäsi kyselyihin parametreja. `set...`-metodit huolehtivat siitä, että annettua dataa ei tulkita osaksi kyselyä, eli sitä käsitellään vain datana.
 
 
 **Ratkaisun testaaminen**
 
-Albumien käsittelemiseksi ei ole valmista pääohjelmaa, mutta voit halutessasi luoda uuden pääohjelman, muokata edellisen osan ohjelmaa tai hyödyntää [tämän osan tarkastamiseksi kirjoitettuja yksikkötestejä](TODO). Testit voidaan suorittaa tuttuun tapaan koodieditorilla tai Gradlella:
+Albumien käsittelemiseksi ei ole valmista pääohjelmaa, mutta voit halutessasi luoda uuden pääohjelman, muokata edellisen osan ohjelmaa tai hyödyntää [tämän osan tarkastamiseksi kirjoitettuja yksikkötestejä](./src/test/java/databases/part03/AlbumDAOTest.java). Testit voidaan suorittaa tuttuun tapaan koodieditorilla tai Gradlella:
 
 ```
 ./gradlew test --tests AlbumDAOTest      # unix
@@ -312,7 +316,13 @@ gradlew.bat test --tests AlbumDAOTest    # windows
 ```
 
 
-## 🚀 Pro task: "kovakoodattu" yhteysosoite ympäristömuuttujaan
+## 🚀 Pro task: Try-with-resources
+
+Yhteyksien sulkeminen "käsin" kutsumalla `close()`-metodia vaatii monta operaatiota ja lukuisia ylimääräisiä koodirivejä. Voit vaihtoehtoisesti perehtyä [Javan try-with-resources](https://www.baeldung.com/java-jdbc)-syntaksiin, jolla saat suljettua resurssit automaattisesti.
+
+
+
+## 🚀 Pro task: ympäristömuuttujan hyödyntäminen
 
 Usein samaa koodia suoritetaan lukuisissa erilaisissa ympäristöissä, kuten useiden eri kehittäjien omilla Windows-, Mac- ja Linux- koneilla. Kehittäjien henkilökohtaisten koneiden lisäksi saman koodin täytyy toimia testaus-, staging- ja tuotantoympäristössä, joka saattaa sijaita pilvipalvelussa tai omassa konesalissa. Eri ympäristöissä käytetään eri tietokantoja ja asetuksia, joten niissä tarvitaan eri yhteysosoitteet, käyttäjätunnukset ja muita muuttuvia tietoja esimerkiksi tietokantojen käyttämiseksi.
 
@@ -337,7 +347,7 @@ Ympäristömuuttujat ovat eräänlainen käyttöjärjestelmäkohtainen Map-tieto
 
 ### Ympäristömuuttujien asettaminen
 
-Voit asettaa VS Code:ssa ympäristömuuttujan muuttamalla ["Run and debug"-asetuksia](https://code.visualstudio.com/docs/java/java-debugging#_configuration-options) (ks. kohta `env`). Eclipsessä voit lisätä ohjelmallesi ympäristömuuttujia tämän [Stack Overflow -ketjun](https://stackoverflow.com/a/12810433) ohjeiden mukaisesti. Pidempi ohje löytyy tarvittaessa esimerkiksi [javacodegeeks.com:ista](https://examples.javacodegeeks.com/desktop-java/ide/eclipse/eclipse-environment-variable-setup-example/).
+Voit asettaa VS Code:ssa ympäristömuuttujan muuttamalla ["Run and debug"-asetuksia](https://code.visualstudio.com/docs/java/java-debugging#_configuration-options) (ks. kohta `env`). Eclipsessä voit lisätä ohjelmallesi ympäristömuuttujia tämän [Stack Overflow -ketjun](https://stackoverflow.com/a/12810433) ohjeiden mukaisesti.
 
 Vaihtoehtoisesti ympäristömuuttujia voidaan määritellä koko järjestelmän tasolla:
 
@@ -346,11 +356,6 @@ Vaihtoehtoisesti ympäristömuuttujia voidaan määritellä koko järjestelmän 
 * [MacOS:ssa](https://www.google.com/search?q=macos+set+environment+variable).
 
 Tällä kurssilla voi kuitenkin olla yksinkertaista asettaa ympäristömuuttuja vain omaan koodieditoriisi.
-
-
-## 🚀 Pro task: Try-with-resources
-
-Yhteyksien sulkeminen "käsin" vaatii monta operaatiota ja koodiriviä. Voit vaihtoehtoisesti perehtyä [Javan try-with-resources](https://www.baeldung.com/java-jdbc)-syntaksiin, jolla saat suljettua resurssit automaattisesti.
 
 
 ----
