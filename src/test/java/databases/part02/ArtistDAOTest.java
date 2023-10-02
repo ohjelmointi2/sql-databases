@@ -30,7 +30,7 @@ public class ArtistDAOTest {
         List<Artist> artists = artistDAO.getArtists();
 
         assertTrue(artists.size() > 0);
-        assertEquals("A Cor Do Som", artists.get(0).getName());
-
+        assertEquals("A Cor Do Som", artists.get(0).getName(),
+                "The artists should be sorted by name in ascending order.");
     }
 }
