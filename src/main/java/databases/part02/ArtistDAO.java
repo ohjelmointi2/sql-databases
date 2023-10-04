@@ -36,8 +36,12 @@ public class ArtistDAO {
 
         /*
          * hint: see the class from part 1 for an example of how to connect to the
-         * database and retrieve data from it. Create new Artist objects instead of
-         * printing the results to the console.
+         * database and retrieve data from it. This time create new Artist objects
+         * instead of printing the results to the console.
+         *
+         * Note that you must use the `connectionString` field in this class to connect
+         * to the database. You can't "hard code" the connection string, as that would
+         * make tests run against your actual database, which may have unexpected data.
          */
 
         return artists;
@@ -55,9 +59,17 @@ public class ArtistDAO {
         /*
          * hint: use similar code to the getArtists() method above, but add a WHERE
          * clause to the SQL query to only retrieve the artist with the specified id.
-         * You can also just call the getArtists() method above and iterate through the
-         * results until you find the artist with the specified id. This is less
+         *
+         * The id can be added to the SQL query using PreparedStatement's setLong()
+         * method. For example: preparedStatement.setLong(1, id);
+         *
+         * You could also just call the getArtists() method above and iterate through
+         * the results until you find the artist with the specified id. This is less
          * efficient, but it gets the job done and is easy to implement.
+         *
+         * Note that you must use the `connectionString` field in this class to connect
+         * to the database. You can't "hard code" the connection string, as that would
+         * make tests run against your actual database, which may have unexpected data.
          */
         return null;
     }
