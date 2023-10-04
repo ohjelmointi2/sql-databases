@@ -276,7 +276,7 @@ Yllä esitetty vastuunjakaminen seuraa hyviä periaatteita, jotka tekevät sovel
  * oli paljon pidempi ja monimutkaisempi.
  */
 public static void main(String[] args) {
-    ArtistDAO artistDAO = new ArtistDAO();
+    ArtistDAO artistDAO = new ArtistDAO(JDBC_URL);
     List<Artist> artists = artistDAO.getArtists();
 
     for (Artist artist : artists) {
