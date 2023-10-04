@@ -10,6 +10,23 @@ import databases.part02.Artist;
 public class AlbumDAO {
 
     /**
+     * The connection string used to connect to the database. You MUST use this
+     * string when connecting to the database using JDBC. In the unit tests, this
+     * field will be set to a different value.
+     */
+    private final String connectionString;
+
+    /**
+     * Creates a new AlbumDAO that uses the specified connection string to connect
+     * to the database. For example: "jdbc:sqlite:data/Chinook_Sqlite.sqlite"
+     *
+     * @param connectionString, see https://www.baeldung.com/java-jdbc-url-format
+     */
+    public AlbumDAO(String jdbcConnection) {
+        this.connectionString = jdbcConnection;
+    }
+
+    /**
      * Returns a list of all albums that have the specified artist as the artist.
      * If there are no albums in the database
      *

@@ -12,11 +12,14 @@ import java.sql.ResultSet;
  */
 public class JdbcDemoMain {
 
-    /*
-     * The JDBC connection string defining the database to connect to. In this case,
-     * we are connecting to a SQLite database stored in the /data directory. JDBC
-     * connection strings are vendor specific. For example, the connection string
-     * for MySQL is different than the connection string for SQLite.
+    /**
+     * The connection string used to connect to the database. If you are using a
+     * MySQL database, you will need to change this string. For example:
+     *
+     * jdbc:mysql://localhost:3306/Chinook?user=CHANGE&password=CHANGE
+     *
+     * If you change the connection string, *please change it back* before
+     * submitting your code, as the first test depends on the SQLite database.
      */
     private static final String JDBC_CONNECTION_STRING = "jdbc:sqlite:data/Chinook_Sqlite.sqlite";
 

@@ -10,7 +10,19 @@ import org.junit.jupiter.api.Test;
 import databases.part02.Artist;
 
 public class AlbumDAOTest {
-    private AlbumDAO albumDAO = new AlbumDAO();
+    /**
+     * The connection string used to connect to the database. Note that this string
+     * is different from the one used in the main() method. This is because the
+     * tests use a different database than the main() method.
+     */
+    private static final String JDBC_URL = "jdbc:sqlite:data/Chinook_Sqlite_TEST.sqlite";
+
+    /**
+     * The DAO we are testing. We use a different DAO with a different JDBC_URL for
+     * testing because the other database contains data that we don't want to modify
+     * or delete.
+     */
+    private AlbumDAO albumDAO = new AlbumDAO(JDBC_URL);
 
     /**
      * Ideally, each test should be independent of the others. This is usually

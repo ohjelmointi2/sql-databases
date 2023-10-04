@@ -9,7 +9,7 @@ Javan standardikirjastoon määritelty [JDBC (Java Database Connectivity) -ohjel
 
 JDBC ei rajoita sitä, minkä SQL-pohjaisten tietokantojen kanssa sitä voidaan käyttää, vaan eri tietokantoja voidaan hyödyntää käyttämällä niille toteutettuja valmiita ajureita. Sillä ei siis Java-koodisi näkökulmasta ole eroa, käytätkö tietokantana esimerkiksi [MySQL](https://www.mysql.com/)-, [PostgreSQL](https://www.postgresql.org/)- vai [SQLite](https://www.sqlite.org/index.html)-tyyppistä tietokantaa.
 
-Tässä tehtävässä hyödynnämme **SQLite**-tietokantaa sen tiedostopohjaisuuden ja helppokäyttöisyyden vuoksi.
+Tässä tehtävässä voit käyttää valintasi mukaan joko **MySQL**- tai **SQLite**-tietokantaa. Oletuksena käytämme tiedostopohjaista SQLite-tietokantaa. SQLiten kanssa emme tarvitse erillistä tietokantapalvelinta, joten meidän ei tarvitse huolehtia verkkoyhteyksistä, salasanoista tai asennuksista.
 
 
 ## SQLite
@@ -28,21 +28,29 @@ SQLite toimii Java-ohjelman näkökulmasta samalla tavalla kuin erilliset tietok
 >
 > https://www.sqlite.org/
 
+Harjoituksessa käytettävä SQLite-tietokanta löytyy valmiina tiedostona tämän projektin [data](./data/)-hakemistosta.
+
+
+## ⭐ MySQL
+
+MySQL-tietokannan käyttäminen edellyttää tietokantapalvelinta ja tietokannan luontia kyseiselle palvelimelle. Ohjelmointi 2 -kurssin puolesta MySQL-palvelimen asennukseen ja tietokannan luontiin voidaan antaa vain rajallisesti ohjausta. Kannustamme kuitenkin käyttämään tässä harjoituksessa MySQL:ää, mikäli pystyt käyttämään sitä itseohjautuvasti.
+
+Harjoituksissa käytettävän MySQL-tietokannan luontiskriptit löytyvät valmiina tiedostosta [data/Chinook_MySql_AutoIncrementPKs.sql](./data/Chinook_MySql_AutoIncrementPKs.sql).
+
 
 ## Ajurin lisääminen projektiin
 
-SQLiten kanssa emme tarvitse erillistä tietokantapalvelinta, joten meidän ei tarvitse huolehtia verkkoyhteyksistä tai salasanoista. SQLite ei myöskään edellytä asennuksia, vaan riittää, että lisäämme [SQLite-ajurin](https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc/latest) Java-projektiimme.
-
-SQLite-ajuri, kuten muutkin riippuvuudet, [voidaan ladata itse verkosta ja sijoittaa projektin hakemistoihin](https://www.google.com/search?q=add+jar+file+to+build+path). Riippuvuuksien hallinta on kuitenkin huomattavasti helpompaa, mikäli käytämme automaatiotyökalua kuten Gradle tai Maven. Tässä tehtäväpohjassa riippuvuus on valmiiksi määritettynä Gradle:n [build.gradle](./build.gradle)-tiedostoon, josta koodieditorisi osaa asentaa sen automaattisesti<sup>1</sup>:
+JDBC-ajurit, kuten muutkin riippuvuudet, [voidaan ladata itse verkosta ja sijoittaa projektin hakemistoihin](https://www.google.com/search?q=add+jar+file+to+build+path). Riippuvuuksien hallinta on kuitenkin huomattavasti helpompaa, mikäli käytämme automaatiotyökalua kuten Gradle tai Maven. Tässä tehtäväpohjassa sekä SQLite- että MySQL-ajurit ovat  valmiiksi määritettynä Gradle:n [build.gradle](./build.gradle)-tiedostoon, josta koodieditorisi osaa asentaa ne automaattisesti<sup>1</sup>:
 
 ```groovy
 dependencies {
-    // https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
+    // SQLite driver: https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
     implementation 'org.xerial:sqlite-jdbc:3.43.0.0'
+
+    // MySQL driver: https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
+    implementation 'com.mysql:mysql-connector-j:8.1.0'
 }
 ```
-
-💡 *SQLite ei poikkea ajurin osalta muista tietokannoista. Käyttäessäsi MySQL-tietokantaa lisäisit riippuvuudeksi esimerkiksi. `'com.mysql:mysql-connector-j:8.1.0'`. Kaikki tämän tehtävän koodit toimivatkin myös esim. MySQL-tietokannoilla, kunhan käytät oikeaa ajuria ja yhteysosoitetta.*
 
 <small><sup>1</sup> 🤞 toivottavasti</small>
 
@@ -57,7 +65,7 @@ Käytämme tässä tehtävässä valmista musiikkitietokantaa nimeltä [**Chinoo
 >
 > [Luis Rocha, Chinook Database](https://github.com/lerocha/chinook-database)
 
-Chinook-tietokanta sijaitsee valmiiksi tämän tehtäväpohjan [data](./data/)-hakemistossa.
+Chinook-tietokannan tiedostot sijaitsevat valmiiksi tämän tehtäväpohjan [data](./data/)-hakemistossa.
 
 Chinook-tietokanta sisältää lukuisia tietokantatauluja ja paljon valmista dataa, mutta tässä harjoituksessa käytämme ainoastaan `Artist`- ja `Album`-tauluja. Kaikki muut taulut voit jättää harjoitustyössäsi huomioimatta:
 
@@ -102,17 +110,17 @@ classDiagram
   Track --|> Genre: GenreId
 ```
 
-💡 *Voit vapaasti tutkia tietokannan sisältöä avaamalla sen [SQLite-komentorivityökalulla](https://sqlite.org/cli.html) tai jollain [lukuisista graafisista käyttöliittymistä](https://www.google.com/search?q=sqlite+gui). Älä kuitenkaan muuta `Artist`-taulun sisältöä. Muiden taulujen dataa voit muokata, lisätä ja poistaa vapaasti.*
+💡 *Voit vapaasti tutkia SQLite tietokannan sisältöä avaamalla sen [SQLite-komentorivityökalulla](https://sqlite.org/cli.html) tai jollain [lukuisista graafisista käyttöliittymistä](https://www.google.com/search?q=sqlite+gui). MySQL-tietokannan tutkimisessa voit käyttää valitsemaasi työkalua.*
 
-Voit halutessasi tutustua myös muihin tätä tietokantaa käsitteleviin aineistoihin:
+💡 *Jos tulet vahingossa muuttaneeksi tiedostoja ja haluat perua muutoksen, voit palauttaa versionhallinnasta viimeisimmän version komennolla `git restore data/TIEDOSTONIMI`. Windowsissa muuta kauttaviivan `/` tilalle kenoviiva `\`.*
+
+**Lisätietoja tietokannasta:**
 
 * UML-kaavio: [Chinook-tietokannan Wiki](https://github.com/lerocha/chinook-database/wiki/Chinook-Schema)
 * Valmis tietokanta: [Chinook_Sqlite.sqlite](https://github.com/lerocha/chinook-database/raw/master/ChinookDatabase/DataSources/Chinook_Sqlite.sqlite)
 * Dokumentaatio: https://github.com/lerocha/chinook-database
 * SQL-luontikäskyt: [Chinook_Sqlite.sql](https://raw.githubusercontent.com/lerocha/chinook-database/master/ChinookDatabase/DataSources/Chinook_Sqlite.sql)
 * Tietokannan lisenssi: [MIT](https://github.com/lerocha/chinook-database/blob/master/LICENSE.md)
-
-💡 *Jos tulet vahingossa muuttaneeksi tietokantaa ja haluat perua muutoksen, voit palauttaa versionhallinnasta viimeisimmän version komennolla `git restore data/Chinook_Sqlite.sqlite`. Windowsissa muuta kauttaviivan `/` tilalle kenoviiva `\`.*
 
 
 ## Pääohjelman suorittaminen
@@ -136,6 +144,8 @@ Alice In Chains
 ```
 
 Tehtävän seuraavissa vaiheissa tätä tulostetta muutetaan hieman.
+
+⭐ *Pääohjelma käyttää oletuksena SQLite-tietokantaa, joten joudut muuttamaan yhteysosoitteen tunnuksineen vastaamaan MySQL-tietokantaasi, mikäli käytät MySQL:ää.*
 
 
 ## JDBC:n perusteet
@@ -218,9 +228,9 @@ Aaron Goldberg (202)
 Academy of St. Martin in the Fields & Sir Neville Marriner (214)
 ```
 
-💡 *Nyt artistit ovat hieman eri järjestyksessä ja esim. AC/DC ei ole enää ensimmäisenä.*
+💡 *Huomaa, että nyt artistit ovat hieman eri järjestyksessä. AC/DC ei ole enää ensimmäisenä.*
 
-Tämä osa tehtävästä tarkastetaan tutkimalla ohjelmasi tulostetta, koska `System.out.println`-kutsuihin perustuvan ohjelmalogiikan testaaminen ohjelmallisesti on hankalaa. Tällainen lähestymistapa rajoittaa myös koodin uudelleenkäyttöä, koska `main`-metodi ei palauta mitään. Kun tarvitset artistien listausta myöhemmin toisessa osassa ohjelmaa, joudut toistamaan samaa logiikkaa, mikä on virhealtista ja tekee koodista hankalammin ylläpidettävää.
+Tämä osa tehtävästä tarkastetaan tutkimalla ohjelmasi tulostetta, koska `System.out.println`-kutsuihin perustuvan ohjelmalogiikan testaaminen ohjelmallisesti on hankalaa. Ratkaisu rajoittaa myös koodin uudelleenkäyttöä, koska `main`-metodi ei palauta mitään. Jos tarvitset artistien listausta myöhemmin toisessa osassa ohjelmaa, joudut toistamaan samaa logiikkaa, mikä on virhealtista ja tekee koodista hankalammin ylläpidettävää.
 
 Parempi tapa on eristää logiikka omiin metodeihinsa, jotta sitä voidaan kutsua ohjelman muista osista tai muista ohjelmista. Ohjelman jakaminen osiin helpottaa siis sen **testaamista** ja tekee koodista **uudelleenkäytettävämpää** ja **ylläpidettävämpää**.
 
@@ -331,23 +341,19 @@ Yhteyksien sulkeminen "käsin" kutsumalla `close()`-metodia vaatii monta operaat
 
 Usein samaa koodia suoritetaan lukuisissa erilaisissa ympäristöissä, kuten useiden eri kehittäjien omilla Windows-, Mac- ja Linux- koneilla. Kehittäjien henkilökohtaisten koneiden lisäksi saman koodin täytyy toimia testaus-, staging- ja tuotantoympäristössä, joka saattaa sijaita pilvipalvelussa tai omassa konesalissa. Eri ympäristöissä käytetään eri tietokantoja ja asetuksia, joten niissä tarvitaan eri yhteysosoitteet, käyttäjätunnukset ja muita muuttuvia tietoja esimerkiksi tietokantojen käyttämiseksi.
 
-Ympäristökohtaisia asetuksia ei kirjoiteta suoraan ohjelmakoodiin, jotta koodia ei jouduta muuttamaan, kääntämään ja paketoimaan jokaista suoritusympäristöä varten.
-
-Käyttäessämme SQLite-tietokantaa emme tarvitse erillisiä tunnuksia, koska tietokanta on käytännössä vain tiedosto paikallisessa järjestelmässä. Monien muiden tietokantaratkaisujen käyttämiseksi tarvitsisimme kuitenkin käyttäjätunnuksia ja salasanoja. Salasanoja ei koskaan haluta tallentaa selkokielisinä ohjelmakoodiin tai versionhallintaan.
+Ympäristökohtaisia asetuksia ei kirjoiteta suoraan ohjelmakoodiin, jotta koodia ei jouduta muuttamaan, kääntämään ja paketoimaan erikseen jokaista suoritusympäristöä varten. Käyttäjätunnuksia, salasanoja ja API-avaimia ei puolestaan haluta tallentaa ohjelmakoodiin tai versionhallintaan tietoturvasyistä.
 
 Yleinen tapa ratkaista edellä esitettyjä ongelmia on asettaa ympäristökohtaisesti vaihtuvat sekä salaiset arvot käyttöjärjestelmän ympäristömuuttujiin. Sovellus voi ympäristömuuttujien avulla käyttää esimerkiksi kehitys-, testi- tai tuotantokantaa ilman, että ohjelmakoodia muutetaan. Salaiset tiedot, kuten salasanat, jäävät myös pois ohjelmakoodista.
 
 Ympäristömuuttujat ovat eräänlainen käyttöjärjestelmäkohtainen Map-tietorakenne, jossa eri arvoja voidaan käsitellä avainten, eli ympäristömuuttujien nimien, avulla. Ympäristömuuttujien arvoja voidaan Javassa lukea `System.getenv`-metodilla esimerkiksi seuraavasti.
 
 ```diff
-+ // merkkijono luetaan DATABASE-nimisestä ympäristömuuttujasta:
-+ String connectionUrl = System.getenv("DATABASE");
++ // merkkijono luetaan DATABASE-nimisestä ympäristömuuttujasta: 👍
++ private static final String JDBC_URL = System.getenv("DATABASE");
 
-- // kovakoodattu yhteysosoite:
-- String connectionUrl = "jdbc:sqlite:data/Chinook_Sqlite.sqlite";
+- // kovakoodattu yhteysosoite, jossa ympäristökohtainen osoite ja selkokielinen salasana: 😱
+- private static final String JDBC_URL = "jdbc:mysql://localhost:3306/Chinook?user=root&password=ThisPasswordWillLeak";
 ```
-
-💡 *Huom! Tehtävien automaattisen arvioinnin vuoksi älä käytä ympäristömuuttujaa tehtävän palautuksessa.*
 
 
 ### Ympäristömuuttujien asettaminen

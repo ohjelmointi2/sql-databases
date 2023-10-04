@@ -3,9 +3,27 @@ package databases.part02;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Data Access Object for the Artist table in the Chinook database.
+ */
 public class ArtistDAO {
 
-    private static final String JDBC_CONNECTION_STRING = "jdbc:sqlite:data/Chinook_Sqlite.sqlite";
+    /**
+     * The connection string used to connect to the database. You MUST use this
+     * string when connecting to the database using JDBC. In the unit tests, this
+     * field will be set to a different value.
+     */
+    private final String connectionString;
+
+    /**
+     * Creates a new ArtistDAO that uses the specified connection string to connect
+     * to the database. For example: "jdbc:sqlite:data/Chinook_Sqlite.sqlite"
+     *
+     * @param connectionString, see https://www.baeldung.com/java-jdbc-url-format
+     */
+    public ArtistDAO(String connectionString) {
+        this.connectionString = connectionString;
+    }
 
     /**
      * Returns a list of all artists in the database. The list is ordered by artist
