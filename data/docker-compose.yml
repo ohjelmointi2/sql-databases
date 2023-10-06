@@ -1,0 +1,20 @@
+# This is a basic docker-compose.yml file for a MySQL
+# database borrowed from https://hub.docker.com/_/mysql.
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+
+  db:
+    image: mysql
+    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+    # (this is just an example, not intended to be a production configuration)
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    ports:
+      # <Port exposed to the host>:< MySQL port running inside container>
+      - '3306:3306'
+    volumes:
+      - ./:/docker-entrypoint-initdb.d
