@@ -20,7 +20,7 @@ public class AlbumDAO {
      * Creates a new AlbumDAO that uses the specified connection string to connect
      * to the database. For example: "jdbc:sqlite:data/Chinook_Sqlite.sqlite"
      *
-     * @param connectionString see https://www.baeldung.com/java-jdbc-url-format
+     * @param jdbcConnection see https://www.baeldung.com/java-jdbc-url-format
      */
     public AlbumDAO(String jdbcConnection) {
         this.connectionString = jdbcConnection;
