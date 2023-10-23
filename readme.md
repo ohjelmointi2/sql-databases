@@ -372,13 +372,24 @@ Tällä kurssilla voi kuitenkin olla yksinkertaista asettaa ympäristömuuttuja 
 ----
 
 
-## Lisenssi ja tekijät
-
-Tämän tehtävän on kehittänyt Teemu Havulinna ja se on lisensoitu [Creative Commons BY-NC-SA -lisenssillä](https://creativecommons.org/licenses/by-nc-sa/4.0/).
-
-Tehtävänannon, käsiteltävien tiedostojen sekä lähdekoodien toteutuksessa on hyödynnetty ChatGPT 3.5:ttä sekä GitHub copilot-tekoälyavustinta.
-
+# Lisenssit
 
 ## Chinook-tietokanta
 
 Chinook-tietokannan on luonut [Luis Rocha](https://github.com/lerocha) ja se on lisensoitu avoimena lähdekoodina [MIT-lisenssillä](https://github.com/lerocha/chinook-database/blob/master/LICENSE.md).
+
+
+## SQLite-ajurin lisenssi
+
+Lue [Apache License, https://github.com/xerial/sqlite-jdbc/blob/master/LICENSE](https://github.com/xerial/sqlite-jdbc/blob/master/LICENSE).
+
+## MySQL-ajurin lisenssi
+
+Lue [Preface and Legal Notices, https://dev.mysql.com/doc/connector-j/8.1/en/preface.html](https://dev.mysql.com/doc/connector-j/8.1/en/preface.html).
+
+
+## Tämä oppimateriaali
+
+Tämän tehtävän on kehittänyt Teemu Havulinna ja se on lisensoitu [Creative Commons BY-NC-SA -lisenssillä](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+
+Tehtävänannon, lähdekoodien ja testien toteutuksessa on hyödynnetty ChatGPT 3.5 -kielimallia sekä GitHub copilot -tekoälyavustinta.
