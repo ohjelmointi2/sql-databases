@@ -3,10 +3,10 @@
     {
       "name": "Part 1: JdbcDemoMain",
       "setup": "",
-      "run": "./gradlew run",
+      "run": "./gradlew run | python3 .github/classroom/part1test.py",
       "input": "",
-      "output": ".*50.*",
-      "comparison": "regex",
+      "output": "",
+      "comparison": "exact",
       "timeout": 1,
       "points": 20
     },
