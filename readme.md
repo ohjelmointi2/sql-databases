@@ -234,7 +234,7 @@ Tämä osa tehtävästä tarkastetaan tutkimalla ohjelmasi tulostetta, koska `Sy
 
 Parempi tapa on eristää logiikka omiin metodeihinsa, jotta sitä voidaan kutsua ohjelman muista osista tai muista ohjelmista. Ohjelman jakaminen osiin helpottaa siis sen **testaamista** ja tekee koodista **uudelleenkäytettävämpää** ja **ylläpidettävämpää**.
 
-🚀 *Jos olet tarkkana, huomaat että yllä SQLite järjesti artistin "AC/DC" virheellisesti ennen artistia "Aaron...". Tämä johtuu siitä, että ORDER BY -vertailu on kirjainkoosta riippuvainen. "Lähes oikea" järjestys kelpaa tämän tehtävän osalta, mutta voit halutessasi järjestää nimet myös kirjainkoosta riippumatta [tämän keskustelun](https://stackoverflow.com/a/2413833) vinkkien mukaan.*
+🚀 *Jos olet tarkkana, huomaat että yllä SQLite järjesti artistin "AC/DC" virheellisesti ennen artistia "Aaron...". Tämä johtuu siitä, että SQLite:n ORDER BY -vertailu on kirjainkoosta riippuvainen. "Lähes oikea" järjestys kelpaa tämän tehtävän osalta, mutta voit halutessasi järjestää nimet myös kirjainkoosta riippumatta [tämän keskustelun](https://stackoverflow.com/a/2413833) vinkkien mukaan.*
 
 
 ## Osa 2: Olioihin perustuva lähestymistapa *(perusteet, 40 %)*
