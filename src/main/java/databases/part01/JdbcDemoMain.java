@@ -4,11 +4,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * A simple application that prints all artists in the Chinook database.
  * This version uses JDBC directly, and the result is verbose, hard to test and
- * not reusable. We'll improve this in the next part.
+ * not reusable. It is still useful to understand the basics of JDBC.
+ *
+ * We'll improve this in the next part.
  */
 public class JdbcDemoMain {
 
@@ -44,25 +47,42 @@ public class JdbcDemoMain {
             // Execute the query and get the result set
             resultSet = preparedStatement.executeQuery();
 
-            // Iterate over the result set and print the results. The result set contains
-            // the rows returned by the query. Each time next() is called, the result set
-            // moves to the next row. next() returns false when there are no more rows in
-            // the result set, ending the while loop.
+            /*
+             * Iterate over the result set and print the results. The result set contains
+             * the rows returned by the query. Each time next() is called, the result set
+             * moves to the next row.
+             *
+             * If next() returns false, then there are no more rows in the result set, and
+             * the loop terminates.
+             */
             while (resultSet.next()) {
 
-                // getLong() and getString() are used to retrieve the values from the current
-                // row in the result set. The argument passed to these methods is the name of
-                // the column in the result set.
+                /*
+                 * getLong() and getString() are used to retrieve the values from the current
+                 * row in the result set. The argument passed to these methods is the name of
+                 * the column in the result set. There are also methods for other types of
+                 * data, such as getInt() and getDouble().
+                 */
                 String name = resultSet.getString("Name");
 
                 System.out.println(name);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            /*
+             * Operations that access the database can throw SQLExceptions. SQLException is
+             * a checked exception, so it must be caught or thrown. Here we don't really
+             * handle the exception, we just print the stack trace and exit.
+             */
             e.printStackTrace();
 
         } finally {
-            // Close the result set, prepared statement, and connection in the finally block
-            // to ensure they are closed even if an exception is thrown.
+            /*
+             * Close the result set, prepared statement, and connection in the finally block
+             * to ensure they are closed even if an exception is thrown.
+             *
+             * This is a bit verbose, and you could either implement a utility method to
+             * close the resources, or use a try-with-resources block.
+             */
             try {
                 if (resultSet != null) {
                     resultSet.close();
@@ -74,6 +94,10 @@ public class JdbcDemoMain {
                     connection.close();
                 }
             } catch (Exception e) {
+                /*
+                 * Even operations that close the resources can throw exceptions, so we still
+                 * need to catch them.
+                 */
                 e.printStackTrace();
             }
         }

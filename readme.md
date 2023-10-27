@@ -129,7 +129,7 @@ Tehtäväpohja sisältää pääohjelman [**JdbcDemoMain**](./src/main/java/data
 
 ```sh
 ./gradlew run       # Unix
-gradlew.bat run     # Windows
+.\gradlew.bat run   # Windows
 ```
 
 Kun suoritat ohjelman, se tulostaa kaikkien tietokannassa valmiiksi olevien artistien nimet järjestettynä niiden `ArtistId`:n mukaan:
@@ -241,7 +241,7 @@ Parempi tapa on eristää logiikka omiin metodeihinsa, jotta sitä voidaan kutsu
 
 Tehtävän toisessa osassa tehtävänäsi on hyödyntää olio-ohjelmointia ja jakaa tietokantaa käyttävät operaatiot tarkoituksenmukaisesti erillisiin luokkiin ja metodeihin.
 
-Ohjelman rakenteen ja arkkitehtuurin suunnittelemiseksi on hyviä tunnettuja ja laajasti käytettyjä suunnittelumalleja (pattern), joita noudattamalla tulet soveltaneeksi hyviä käytäntöjä ja koodistasi tulee toivottavasti laadukasta. Ohjelmistokehittäjät noudattavat usein samoja suunnittelumalleja, mikä helpottaa muiden kirjoittamien ohjelmien ymmärtämistä ja koodauskäytäntöjen yhtenäistämistä.
+Ohjelman rakenteen ja arkkitehtuurin suunnittelemiseksi on hyviä tunnettuja ja [laajasti käytettyjä suunnittelumalleja (pattern)](https://en.wikipedia.org/wiki/Software_design_pattern), joita noudattamalla tulet soveltaneeksi hyviä käytäntöjä ja koodistasi tulee toivottavasti laadukasta. Ohjelmistokehittäjät noudattavat usein samoja suunnittelumalleja, mikä helpottaa muiden kirjoittamien ohjelmien ymmärtämistä ja koodauskäytäntöjen yhtenäistämistä.
 
 **DAO (Data Access Object)**
 
@@ -253,24 +253,24 @@ Tietokantalogiikan eriyttämiseksi muusta koodista käytetään usein ns. DAO-ma
 
 **Tehtävä**
 
-Tehtäväpohjan paketissa [databases.part02](./src/main/java/databases/part02/) on valmiina luokat [Artist.java](./src/main/java/databases/part02/Artist.java), [ArtistDAO.java](./src/main/java/databases/part02/ArtistDAO.java) ja [ArtistAppMain.java](./src/main/java/databases/part02/ArtistAppMain.java):
+Tehtäväpohjan paketissa [databases.part02](./src/main/java/databases/part02/) on valmiina luokat [`Artist`](./src/main/java/databases/part02/Artist.java), [`ArtistDAO`](./src/main/java/databases/part02/ArtistDAO.java) sekä [`ArtistAppMain`](./src/main/java/databases/part02/ArtistAppMain.java):
 
 
-1. **Artist.java:**
+1. **Artist:**
 
     Tämä luokka edustaa yksittäisiä artisteja sovelluksessa ja on "aivan tavallinen" luokka. Luokassa ei ole tietokanta- eikä käyttöliittymälogiikkaa. Tällaisesta luokasta käytetään usein nimitystä *model* tai *entity*.
 
-2. **ArtistDAO.java:**
+2. **ArtistDAO:**
 
-    ArtistDAO (Data Access Object) -luokka toimii välittäjänä sovelluksen liiketoimintalogiikan ja tietokannan välillä. Sen pääasiallinen tehtävä on tarjota metodeja tietokantaoperaatioihin, jotka liittyvät "Artist" -entiteettiin, kuten artistien luontiin, hakemiseen, päivittämiseen ja poistamiseen. Se helpottaen muun sovelluksen työskentelyä tietokannan kanssa ilman tarvetta tuntea taustalla olevaa SQL:ää tai tietokantaan liittyviä yksityiskohtia.
+    ArtistDAO (Data Access Object) -luokka toimii välittäjänä sovelluksen liiketoimintalogiikan ja tietokannan välillä. Sen pääasiallinen tehtävä on tarjota metodeja tietokantaoperaatioihin, jotka liittyvät "Artist" -entiteettiin. Näitä ovat esim artistien luonti, hakeminen, päivittämiseen ja poistamiseen. Tietokantaoperaatioiden toteuttaminen erilliseen Java-luokkaan helpottaa muun sovelluksen työskentelyä tietokannan kanssa, koska muiden luokkien ei tarvitse tuntea taustalla olevaa SQL:ää tai tietokantaan liittyviä yksityiskohtia.
 
-    💡 *ArtistDAO-luokan rooli on ainoastaan toimia välittäjänä tietokannan ja sovelluslogiikan välillä, joten tässä luokassa ei ole lainkaan käyttöliittymään liittyvää logiikkaa, kuten tulosteita.*
+    💡 *ArtistDAO-luokan rooli on ainoastaan toimia välittäjänä tietokannan ja sovelluslogiikan välillä. DAO-luokissa ei ole lainkaan käyttöliittymään liittyvää logiikkaa, kuten tulosteita.*
 
-3. **ArtistAppMain.java:**
+3. **ArtistAppMain:**
 
-    Tämä luokka toimii uutena pääohjelmana, joka hyödyntää ArtistDAO-luokkaa.
+    Tämä luokka toimii uutena pääohjelmana, joka hyödyntää ArtistDAO-luokkaa. Loogisesti tämä luokka vastaa edellisessä osassa käyttämääsi [`JdbcDemoMain`-luokkaa](./src/main/java/databases/part01/JdbcDemoMain.java), mutta tällä kertaa se ei sisällä lainkaan tietokantalogiikkaa.
 
-Yllä esitetty vastuunjakaminen seuraa hyviä periaatteita, jotka tekevät sovelluksen kehittämisestä, ylläpidosta ja skaalautuvuudesta helpompaa. Nyt kun ohjelma on jaettu pienempiin osiin, edellisessä osassa kehitetty `main`-metodi saadaan näyttämään paljon yksinkertaisemmalta:
+Yllä esitetty vastuunjakaminen seuraa hyviä periaatteita, jotka tekevät sovelluksen kehittämisestä, ylläpidosta ja skaalautuvuudesta helpompaa. Nyt kun ohjelma on jaettu pienempiin osiin, edellisessä osassa käytetty `main`-metodi saadaan näyttämään paljon yksinkertaisemmalta:
 
 ```java
 /**
@@ -287,29 +287,36 @@ public static void main(String[] args) {
 }
 ```
 
-Tehtävän tässä osassa sinun tulee toteuttaa [ArtistDAO.java](./src/main/java/databases/part02/ArtistDAO.java)-luokkaan metodit `getArtists` sekä `getArtistById`. Metodien otsikot ja Javadoc-kommentit löytyvät luokasta valmiina.
+Tehtävän tässä osassa sinun tulee toteuttaa [`ArtistDAO`-luokkaan](./src/main/java/databases/part02/ArtistDAO.java) metodit `getArtists` sekä `getArtistById`. Metodien otsikot ja Javadoc-kommentit löytyvät luokasta valmiina.
 
-Tällä kertaa ratkaisusi testataan yksikkötesteillä, jotka on kirjoitettu [ArtistDAOTest.java](./src/test/java/databases/part02/ArtistDAOTest.java)-luokkaan. Voit suorittaa testit joko koodieditorisi testaustyökalulla ([VS Code](https://code.visualstudio.com/docs/java/java-testing), [Eclipse](https://www.vogella.com/tutorials/JUnitEclipse/article.html)) tai [Gradle-automaatiotyökalulla](https://docs.gradle.org/current/userguide/java_testing.html):
+Voit suorittaa [`ArtistAppMain`-luokan](./src/main/java/databases/part02/ArtistAppMain.java) koodieditorillasi. Aluksi kyseinen luokka ei tulosta mitään, mutta toteutettuasi DAO-luokan tulosteen pitäisi olla sama kuin tehtävän edellisessä osassa.
+
+DAO-luokkasi testataan yksikkötesteillä, jotka on kirjoitettu [`ArtistDAOTest`-testiluokkaan](./src/test/java/databases/part02/ArtistDAOTest.java). Voit suorittaa testit joko koodieditorisi testaustyökalulla ([VS Code](https://code.visualstudio.com/docs/java/java-testing), [Eclipse](https://www.vogella.com/tutorials/JUnitEclipse/article.html)) tai [Gradle-automaatiotyökalulla](https://docs.gradle.org/current/userguide/java_testing.html):
 
 ```sh
 ./gradlew test --tests ArtistDAOTest      # unix
-gradlew.bat test --tests ArtistDAOTest    # windows
+.\gradlew.bat test --tests ArtistDAOTest  # windows
 ```
 
-💡 *Älä valmiiden metodien nimiä, parametreja tai paluuarvojen tyyppejä. Muutokset saattavat aiheuttaa ongelmia testauksen kanssa.*
+💡 *Älä muuta valmiiden metodien nimiä, parametreja tai paluuarvojen tyyppejä. Muutokset saattavat aiheuttaa ongelmia testauksen kanssa.*
 
-💡 *Yritä välttää saman koodin toistamista molemmissa metodeissa, mikäli mahdollista. Saat toteuttaa tehtävänannossa mainittujen luokkien ja metodien lisäksi myös muita luokkia ja metodeja. Esimerkiksi `Database`-luokka yhteyksien avaamiseksi ja sulkemiseksi voi olla hyvä idea. Metodisi saavat myös kutsua toisiaan: voit kutsua getArtistById-metodissa getArtists-metodia (tehokkuudella ei tässä tehtävässä ole painoarvoa).*
+💡 *Yritä välttää saman koodin toistamista molemmissa metodeissa, mikäli mahdollista. Saat toteuttaa tehtävänannossa mainittujen luokkien ja metodien lisäksi myös muita luokkia ja metodeja. Esimerkiksi `Database`-luokka yhteyksien avaamiseksi ja sulkemiseksi voi olla hyvä idea. Toisaalta voit toteuttaa erillisen apumetodin resurssien sulkemiseksi. Metodisi saavat myös kutsua toisiaan: voit kutsua getArtistById-metodissa getArtists-metodia (tehokkuudella ei tässä tehtävässä ole painoarvoa).*
 
 💡 *Tulet mahdollisesti huomaamaan, että yhteyksien sulkeminen "käsin" vaatii monta operaatiota ja koodiriviä. Voit vaihtoehtoisesti perehtyä [Javan try-with-resources](https://www.baeldung.com/java-jdbc)-syntaksiin, jolla saat suljettua resurssit automaattisesti.*
 
 
 ## Osa 3: Tiedon lisääminen, päivittäminen ja poistaminen *(soveltaminen, 40 %)*
 
-Edellisissä osissa olemme hakeneet tietoa `executeQuery`-metodilla. Tällä kertaa tarkoituksena on lisätä, päivittää ja poistaa tietoa `executeUpdate`-metodilla.
+Edellisissä osissa olemme hakeneet tietoa `executeQuery`-metodilla. Tällä kertaa tarkoituksena on lisätä, päivittää ja poistaa tietoa [`executeUpdate`-metodilla](https://docs.oracle.com/javase/8/docs/api/java/sql/PreparedStatement.html#executeUpdate--).
 
-Tämän projektin paketista [databases.part03](./src/main/java/databases/part03/) löytyy luokat [Album](./src/main/java/databases/part03/Album.java) sekä [AlbumDAO](./src/main/java/databases/part03/AlbumDAO.java). Toteuta [AlbumDAO](./src/main/java/databases/part03/AlbumDAO.java)-luokkaan seuraavat operaatiot: `getAlbumsByArtist`, `addAlbum`, `updateAlbum` ja `deleteAlbum`.
+Tämän projektin paketista [databases.part03](./src/main/java/databases/part03/) löytyy luokat [`Album`](./src/main/java/databases/part03/Album.java) sekä [`AlbumDAO`](./src/main/java/databases/part03/AlbumDAO.java). Luokkien roolit noudattavat samaa mallia kuin `Artist` ja `ArtistDAO`. Toteuta [`AlbumDAO`-luokkaan](./src/main/java/databases/part03/AlbumDAO.java) seuraavat operaatiot:
 
-Metodit löytyvät [luokasta](./src/main/java/databases/part03/AlbumDAO.java) valmiina ja niiden kommentit kuvailevat tarkemmin kultakin metodilta vaaditut toiminnot.
+* `getAlbumsByArtist(Artist artist)`
+* `addAlbum(Album album)`
+* `updateAlbum(Album album)`
+* `deleteAlbum(Album album)`
+
+Metodit löytyvät [`AlbumDAO`-luokasta](./src/main/java/databases/part03/AlbumDAO.java) valmiina ja niiden kommentit kuvailevat tarkemmin kultakin metodilta vaaditut toiminnot.
 
 
 **SQL-injektiot ja tietoturva**
@@ -320,16 +327,16 @@ Huomaa, että SQL-kyselyjen muodostaminen merkkijonoja yhdistelemällä aiheutta
 
 *Kuva: Randall Munroe. Exploits of a Mom. [https://xkcd.com/327/](https://xkcd.com/327/). [CC BY-NC 2.5](https://creativecommons.org/licenses/by-nc/2.5/)*
 
-Muista siis käyttää oppimateriaaleissa esiteltyä `PreparedStatement`-luokkaa ja sen `setString`-, `setLong`- ja muita metodeita aina lisätessäsi kyselyihin parametreja. `set...`-metodit huolehtivat siitä, että annettua dataa ei tulkita osaksi kyselyä, eli sitä käsitellään vain datana.
+Muista siis käyttää `PreparedStatement`-luokkaa ja sen `setString`-, `setLong`- ja muita metodeita aina lisätessäsi kyselyihin parametreja. `set...`-metodit huolehtivat siitä, että annettua dataa ei tulkita osaksi kyselyä, eli sitä käsitellään vain datana.
 
 
 **Ratkaisun testaaminen**
 
-Albumien käsittelemiseksi ei ole valmista pääohjelmaa, mutta voit halutessasi luoda uuden pääohjelman, muokata edellisen osan ohjelmaa tai hyödyntää [tämän osan tarkastamiseksi kirjoitettuja yksikkötestejä](./src/test/java/databases/part03/AlbumDAOTest.java). Testit voidaan suorittaa tuttuun tapaan koodieditorilla tai Gradlella:
+Albumien käsittelemiseksi ei ole valmista pääohjelmaa, mutta voit halutessasi luoda uuden pääohjelman, muokata edellisen osan ohjelmaa tai hyödyntää [`AlbumDAOTest`-yksikkötestejä](./src/test/java/databases/part03/AlbumDAOTest.java). `AlbumDAOTest` on tekniseltä toteutukseltaan melko erilainen kuin aikaisemmat testit, koska siinä joudutaan alustamaan testitietokanta aina samaan alkupisteeseen ennen testejä. Voit kuitenkin suorittaa sen aikan kuten muutkin testit, joko koodieditorilla tai Gradlella:
 
 ```
 ./gradlew test --tests AlbumDAOTest      # unix
-gradlew.bat test --tests AlbumDAOTest    # windows
+.\gradlew.bat test --tests AlbumDAOTest  # windows
 ```
 
 
@@ -347,7 +354,7 @@ Ympäristökohtaisia asetuksia ei kirjoiteta suoraan ohjelmakoodiin, jotta koodi
 
 Yleinen tapa ratkaista edellä esitettyjä ongelmia on asettaa ympäristökohtaisesti vaihtuvat sekä salaiset arvot käyttöjärjestelmän ympäristömuuttujiin. Sovellus voi ympäristömuuttujien avulla käyttää esimerkiksi kehitys-, testi- tai tuotantokantaa ilman, että ohjelmakoodia muutetaan. Salaiset tiedot, kuten salasanat, jäävät myös pois ohjelmakoodista.
 
-Ympäristömuuttujat ovat eräänlainen käyttöjärjestelmäkohtainen Map-tietorakenne, jossa eri arvoja voidaan käsitellä avainten, eli ympäristömuuttujien nimien, avulla. Ympäristömuuttujien arvoja voidaan Javassa lukea `System.getenv`-metodilla esimerkiksi seuraavasti.
+Ympäristömuuttujat ovat eräänlainen käyttöjärjestelmäkohtainen Map-tietorakenne. Ympäristömuuttujien arvoja voidaan Javassa lukea `System.getenv`-metodilla esimerkiksi seuraavasti.
 
 ```diff
 + // merkkijono luetaan DATABASE-nimisestä ympäristömuuttujasta: 👍
@@ -367,8 +374,6 @@ Vaihtoehtoisesti ympäristömuuttujia voidaan määritellä koko järjestelmän 
 * [Windowsissa](https://www.google.com/search?q=windows+set+environment+variable)
 * [Linuxissa](https://www.google.com/search?q=linux+set+environment+variable)
 * [MacOS:ssa](https://www.google.com/search?q=macos+set+environment+variable).
-
-Tällä kurssilla voi kuitenkin olla yksinkertaista asettaa ympäristömuuttuja vain omaan koodieditoriisi.
 
 
 ----

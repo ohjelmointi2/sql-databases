@@ -28,7 +28,7 @@ public class AlbumDAO {
 
     /**
      * Returns a list of all albums that have the specified artist as the artist.
-     * If there are no albums in the database
+     * If there are no albums for the specified artist, the list is empty.
      *
      * @param artist the artist whose albums to retrieve.
      * @return a list of all albums that have the specified artist as the artist,
@@ -43,6 +43,8 @@ public class AlbumDAO {
          * Note that you must use the `connectionString` field in this class to connect
          * to the database. You can't "hard code" the connection string, as that would
          * make tests run against your actual database, which may have unexpected data.
+         *
+         * Make sure to sort the albums by AlbumId in ascending order (low to high).
          */
         return null;
     }
