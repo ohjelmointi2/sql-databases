@@ -302,7 +302,7 @@ DAO-luokkasi testataan yksikkötesteillä, jotka on kirjoitettu [`ArtistDAOTest`
 
 💡 *Yritä välttää saman koodin toistamista molemmissa metodeissa, mikäli mahdollista. Saat toteuttaa tehtävänannossa mainittujen luokkien ja metodien lisäksi myös muita luokkia ja metodeja. Esimerkiksi `Database`-luokka yhteyksien avaamiseksi ja sulkemiseksi voi olla hyvä idea. Toisaalta voit toteuttaa erillisen apumetodin resurssien sulkemiseksi. Metodisi saavat myös kutsua toisiaan: voit kutsua getArtistById-metodissa getArtists-metodia (tehokkuudella ei tässä tehtävässä ole painoarvoa).*
 
-💡 *Tulet mahdollisesti huomaamaan, että yhteyksien sulkeminen "käsin" vaatii monta operaatiota ja koodiriviä. Voit vaihtoehtoisesti perehtyä [Javan try-with-resources](https://www.baeldung.com/java-jdbc)-syntaksiin, jolla saat suljettua resurssit automaattisesti.*
+💡 *Tulet mahdollisesti huomaamaan, että yhteyksien sulkeminen "käsin" vaatii monta operaatiota ja koodiriviä. Voit vaihtoehtoisesti perehtyä [Javan try-with-resources](https://www.baeldung.com/java-try-with-resources)-syntaksiin, jolla saat suljettua resurssit automaattisesti.*
 
 
 ## Osa 3: Tiedon lisääminen, päivittäminen ja poistaminen *(soveltaminen, 40 %)*
@@ -342,7 +342,7 @@ Albumien käsittelemiseksi ei ole valmista pääohjelmaa, mutta voit halutessasi
 
 ## 🚀 Pro task: Try-with-resources
 
-Yhteyksien sulkeminen "käsin" kutsumalla `close()`-metodia vaatii monta operaatiota ja lukuisia ylimääräisiä koodirivejä. Voit vaihtoehtoisesti perehtyä [Javan try-with-resources](https://www.baeldung.com/java-jdbc)-syntaksiin, jolla saat suljettua resurssit automaattisesti.
+Yhteyksien sulkeminen "käsin" kutsumalla `close()`-metodia vaatii monta operaatiota ja lukuisia ylimääräisiä koodirivejä. Voit vaihtoehtoisesti perehtyä [Javan try-with-resources](https://www.baeldung.com/java-try-with-resources)-syntaksiin, jolla saat suljettua resurssit automaattisesti.
 
 
 
