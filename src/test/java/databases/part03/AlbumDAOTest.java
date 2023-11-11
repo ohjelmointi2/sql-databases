@@ -43,15 +43,13 @@ public class AlbumDAOTest {
         Connection connection = DriverManager.getConnection(JDBC_URL);
         connection.prepareStatement("DELETE FROM Album").executeUpdate();
         connection
-                .prepareStatement(
-                        """
-                                INSERT INTO `Album` (`Title`, `ArtistId`) VALUES
-                                    ('Album 1 by artist 1', 1),
-                                    ('Album 2 by artist 1', 1),
-                                    ('Album 3 by artist 2', 2);
-                                """)
+                .prepareStatement("""
+                        INSERT INTO Album (Title, ArtistId) VALUES
+                        ('Album 1 by artist 1', 1),
+                        ('Album 2 by artist 1', 1),
+                        ('Album 3 by artist 2', 2);
+                        """)
                 .executeUpdate();
-
     }
 
     @Test
