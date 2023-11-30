@@ -147,6 +147,7 @@ Tehtävän seuraavissa vaiheissa tätä tulostetta muutetaan hieman.
 
 ⭐ *Pääohjelma käyttää oletuksena SQLite-tietokantaa, joten joudut muuttamaan yhteysosoitteen tunnuksineen vastaamaan MySQL-tietokantaasi, mikäli käytät MySQL:ää.*
 
+💡 *Jos suoritat ohjelman VS Code:lla ja törmäät virheeseen `SQLException: path to 'data/Chinook_Sqlite.sqlite' does not exist`, avaa projekti uudestaan "Open Folder..."-valikon kautta. SQLite-tietokannan osoite on esitetty koodissa **suhteellisena polkuna** projektin päähakemistoon nähden, joten VS Code:ssa tulee olla auki päähakemisto, joka sisältää mm. tämän readme.md-tiedoston.*
 
 ## JDBC:n perusteet
 
