@@ -1,9 +1,11 @@
 package databases.part03;
 
 /**
- * Represents an album in the Chinook database.
+ * Represents an album in the Chinook database. You don't need to modify this
+ * class in this exercise.
  */
 public class Album {
+
     private long id;
     private String title;
     private long artistId;
@@ -14,9 +16,9 @@ public class Album {
      * automatically generate an id for the album.
      */
     public Album(String title, long artistId) {
-        this.id = -1; // the database should generate an id for this album
-        this.title = title;
-        this.artistId = artistId;
+        // Call the other constructor with -1 as the id. -1 is used to indicate that
+        // the id is not yet known.
+        this(-1, title, artistId);
     }
 
     /**
@@ -38,20 +40,20 @@ public class Album {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public long getArtistId() {
         return artistId;
-    }
-
-    public void setArtistId(long artistId) {
-        this.artistId = artistId;
     }
 
     @Override
     public String toString() {
         return "Album [id=" + id + ", title=" + title + ", artistId=" + artistId + "]";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Album other) {
+            return id == other.id && title.equals(other.title) && artistId == other.artistId;
+        }
+        return false;
     }
 }

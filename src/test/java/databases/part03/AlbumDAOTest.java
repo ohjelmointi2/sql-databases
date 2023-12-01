@@ -1,10 +1,10 @@
 package databases.part03;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import databases.part02.Artist;
+import databases.utils.TestUtils;
 
 public class AlbumDAOTest {
     /**
@@ -19,135 +20,147 @@ public class AlbumDAOTest {
      * is different from the one used in the main() method. This is because the
      * tests use a different database than the main() method.
      */
-    private static final String JDBC_URL = "jdbc:sqlite:data/Chinook_Sqlite_TEST.sqlite";
+    private static final String TEST_JDBC_URL = "jdbc:sqlite:data/Chinook_Sqlite_TEST.sqlite";
 
     /**
-     * The DAO we are testing. We use a different DAO with a different JDBC_URL for
-     * testing because the other database contains data that we don't want to modify
-     * or delete.
+     * The DAO we are testing. We use a different DAO object with a different
+     * JDBC_URL for testing because the other database contains data that we don't
+     * want to modify or delete.
      */
-    private AlbumDAO albumDAO = new AlbumDAO(JDBC_URL);
+    private AlbumDAO albumDAO = new AlbumDAO(TEST_JDBC_URL);
 
-    private final Artist artist1 = new Artist(1, "AC/DC"); // artist 1 has 2 albums in test database
-    private final Artist artist3 = new Artist(3, "Artist 3"); // no albums in test database
+    // RHCP has 2 albums in test database (see TestUtils.initialize())
+    private final Artist redHotChiliPeppers = new Artist(3000, "Red Hot Chili Peppers");
+    private final Album rhcpAlbum1 = new Album(9001, "Californication", 3000);
+    private final Album rhcpAlbum2 = new Album(9003, "By the Way", 3000);
+
+    // ABBA has no albums in test database (see TestUtils.initialize())
+    private final Artist abba = new Artist(5000, "ABBA");
 
     /**
-     * Ideally, each test should be independent of the others. This is accomplished
-     * by clearing the database before each test and by using a test fixture, so
-     * each test runs with the same initial data.
-     *
-     * @throws SQLException
+     * Before each test, we initialize the database to a known state. This ensures
+     * that each test is independent of the others.
      */
     @BeforeEach
-    void clearDatabase() throws SQLException {
-        Connection connection = DriverManager.getConnection(JDBC_URL);
-        connection.prepareStatement("DELETE FROM Album").executeUpdate();
-        connection
-                .prepareStatement("""
-                        INSERT INTO Album (Title, ArtistId) VALUES
-                        ('Album 1 by artist 1', 1),
-                        ('Album 2 by artist 1', 1),
-                        ('Album 3 by artist 2', 2);
-                        """)
-                .executeUpdate();
+    void setUp() throws SQLException {
+        TestUtils.initialize(TEST_JDBC_URL);
     }
 
+    /**
+     * There are two albums for Red Hot Chili Peppers in the test database. This
+     * test verifies that we can retrieve both of them in the correct order and
+     * with the correct data.
+     */
     @Test
-    void testGettingAlbumsForArtist() {
-        List<Album> albums = albumDAO.getAlbumsByArtist(artist1);
+    void getAlbumsByArtistReturnsTwoAlbumsForRedHotChiliPeppers() {
+        List<Album> albums = albumDAO.getAlbumsByArtist(redHotChiliPeppers);
+
+        assertNotNull(albums, "The list of albums for RHCP should not be null");
 
         // There should be 2 albums:
         assertEquals(2, albums.size());
 
-        // The titles should be correct:
-        assertEquals("Album 1 by artist 1", albums.get(0).getTitle());
-        assertEquals("Album 2 by artist 1", albums.get(1).getTitle());
-
-        // The AlbumIds should be correct:
-        assertEquals(1, albums.get(0).getId());
-        assertEquals(2, albums.get(1).getId());
-
-        // The ArtistIds should be correct:
-        assertEquals(1, albums.get(0).getArtistId());
-        assertEquals(1, albums.get(1).getArtistId());
+        // The albums returned should equal the ones in the test database:
+        assertEquals(List.of(rhcpAlbum1, rhcpAlbum2), albums);
     }
 
+    /**
+     * There are no albums for ABBA in the test database.
+     */
     @Test
-    void testGettingAlbumsForArtistWithNoAlbums() {
-        List<Album> albums = albumDAO.getAlbumsByArtist(artist3);
+    void getAlbumsByArtistReturnsEmptyListOfAlbumsForAbba() {
+        List<Album> albums = albumDAO.getAlbumsByArtist(abba);
 
-        assertEquals(0, albums.size());
+        assertNotNull(albums, "The list of albums should not be null");
+        assertTrue(albums.isEmpty(), "The list of albums should be empty");
     }
 
+    /**
+     * This test adds a new album for ABBA. The test verifies that the album was
+     * added successfully, and that it is the last album for ABBA.
+     */
     @Test
-    void testAddingAlbum() {
-        // A new album for artist 1:
-        Album album = new Album("New Album", 1);
+    void addAlbumStoresTheNewAlbumInTheDatabase() {
+        Album superTrouper = new Album("Super Trouper", abba.getId());
 
-        boolean added = albumDAO.addAlbum(album);
-        assertTrue(added);
+        boolean success = albumDAO.addAlbum(superTrouper);
+        assertTrue(success, "The album should have been added and the method should return true");
 
-        // There should now be 3 albums for artist 1:
-        List<Album> albums = albumDAO.getAlbumsByArtist(artist1);
-        assertEquals(3, albums.size());
+        // There should now be 1 album for ABBA:
+        List<Album> albums = albumDAO.getAlbumsByArtist(abba);
 
-        // The new album should be the last one:
-        Album latestAlbum = albums.get(albums.size() - 1);
-        assertEquals("New Album", latestAlbum.getTitle());
+        assertEquals(1, albums.size());
+
+        Album added = albums.get(0);
+
+        assertEquals(superTrouper.getTitle(), added.getTitle(), "The title of the album should be correct");
+        assertEquals(superTrouper.getArtistId(), added.getArtistId(), "The artist id of the album should be correct");
     }
 
+    /**
+     * This test adds a new album for ABBA. The album's title contains characters
+     * that need to be escaped in SQL queries. The test verifies that the album was
+     * added successfully, and that the title is correct.
+     */
     @Test
-    void testAddingAlbumWithSpecialCharacters() {
-        // The album's title contains characters that need to be escaped in SQL queries:
-        String title = "~~~ The album's \"name\"";
+    void albumNamesWithSpecialCharactersAreProperlyEscaped() {
+        // This title contains characters that need to be escaped in SQL queries:
+        String unsafeTitle = "greatest hits'); DROP TABLE \"Album\"; --";
 
-        Album album = new Album(title, 1);
+        Album album = new Album(unsafeTitle, abba.getId());
 
         // The album should be added successfully:
         boolean added = albumDAO.addAlbum(album);
-        assertTrue(added);
+        assertTrue(added, "The album should have been added and the method should return true");
 
-        // There should now be 3 albums for artist 1:
-        List<Album> albums = albumDAO.getAlbumsByArtist(artist1);
-        assertEquals(3, albums.size());
+        // There should now be 1 album for ABBA:
+        List<Album> albums = albumDAO.getAlbumsByArtist(abba);
+        assertEquals(1, albums.size());
 
-        // The new album should be the last one, with the correct title:
-        Album latestAlbum = albums.get(albums.size() - 1);
-        assertEquals(title, latestAlbum.getTitle());
+        Album addedAlbum = albums.get(albums.size() - 1);
+
+        // If the title matches, the escaping worked correctly:
+        assertEquals(unsafeTitle, addedAlbum.getTitle());
     }
 
     @Test
-    void testUpdatingAlbums() {
-        // Get the albums for artist 1 before the update:
-        List<Album> albums = albumDAO.getAlbumsByArtist(artist1);
-
-        // Change the title of the last album:
-        Album latestAlbum = albums.get(albums.size() - 1);
-        latestAlbum.setTitle("Updated Title");
+    void updatingAnAlbumChangesTheTitleInDatabase() {
+        // Same id and artist as in the test database, but a different title:
+        Album remastered = new Album(9001, "Californication remastered", 3000);
 
         // Make sure the album was updated successfully:
-        boolean updated = albumDAO.updateAlbum(latestAlbum);
-        assertTrue(updated);
+        boolean updated = albumDAO.updateAlbum(remastered);
+        assertTrue(updated, "The album should have been updated and the method should return true");
 
-        // Verify that the name of the last album was updated:
-        List<Album> albumsAfterUpdate = albumDAO.getAlbumsByArtist(artist1);
-        Album lastAfterUpdate = albumsAfterUpdate.get(albumsAfterUpdate.size() - 1);
-        assertEquals("Updated Title", lastAfterUpdate.getTitle());
+        // Verify that the name of the last album was updated by retrieving the albums:
+        List<Album> albumsAfterUpdate = albumDAO.getAlbumsByArtist(redHotChiliPeppers);
+
+        // There should still be 2 albums as before:
+        assertEquals(2, albumsAfterUpdate.size());
+
+        // The first album should now match the details we provided:
+        assertEquals(remastered, albumsAfterUpdate.get(0));
     }
 
     @Test
-    void testDeletingAlbums() {
-        // Get the albums for artist 1 before the delete:
-        List<Album> albums = albumDAO.getAlbumsByArtist(artist1);
-        assertEquals(2, albums.size());
-
+    void deleteAlbumRemovesTheAlbumFromTheDatabase() {
         // Delete the last album:
-        Album latestAlbum = albums.get(albums.size() - 1);
-        boolean deleted = albumDAO.deleteAlbum(latestAlbum);
-        assertTrue(deleted);
+        boolean deleted = albumDAO.deleteAlbum(rhcpAlbum1);
+        assertTrue(deleted, "The album should have been deleted and the method should return true");
 
-        // Verify that the last album was deleted:
-        List<Album> albumsAfterDelete = albumDAO.getAlbumsByArtist(artist1);
+        // Verify that the album was deleted by retrieving the albums:
+        List<Album> albumsAfterDelete = albumDAO.getAlbumsByArtist(redHotChiliPeppers);
         assertEquals(1, albumsAfterDelete.size());
+
+        // The second album should be the only album left for RHCP:
+        assertEquals(rhcpAlbum2.getTitle(), albumsAfterDelete.get(0).getTitle());
+    }
+
+    @Test
+    void deleteAlbumReturnsFalseIfAnAlbumWasNotDeleted() {
+        // Delete an album that does not exist:
+        boolean deleted = albumDAO.deleteAlbum(new Album(-1000, "Does not exist", -1000));
+
+        assertFalse(deleted, "The album should not have been deleted and the method should return false");
     }
 }

@@ -305,6 +305,8 @@ DAO-luokkasi testataan yksikkötesteillä, jotka on kirjoitettu [`ArtistDAOTest`
 
 💡 *Tulet mahdollisesti huomaamaan, että yhteyksien sulkeminen "käsin" vaatii monta operaatiota ja koodiriviä. Voit vaihtoehtoisesti perehtyä [Javan try-with-resources](https://www.baeldung.com/java-try-with-resources)-syntaksiin, jolla saat suljettua resurssit automaattisesti.*
 
+💡 *Testeissä käytetään eri tietokantaa kuin pääohjelmassa. Tutustu tarvittaessa [`TestUtils`-luokkaan](./src/test/java/databases/utils/TestUtils.java) ja sen sisältämiin tietokannan luontikäskyihin.*
+
 
 ## Osa 3: Tiedon lisääminen, päivittäminen ja poistaminen *(soveltaminen, 40 %)*
 
@@ -339,8 +341,6 @@ Albumien käsittelemiseksi ei ole valmista pääohjelmaa, mutta voit halutessasi
 ./gradlew test --tests AlbumDAOTest      # unix
 .\gradlew.bat test --tests AlbumDAOTest  # windows
 ```
-
-💡 *Huomaa, että testien suorittaminen tekee muutoksia repositoriossa olevaan `data/Chinook_Sqlite_TEST.sqlite`-testitietokantaan. Git näyttääkin testien suorittamisen jälkeen kyseisen tiedoston muuttuneena. Testitietokanta alustetaan samaan lähtötilaan ennen jokaista testiä, joten muutoksilla ei ole käytännössä merkitystä. Voit halutessasi jättää tämän tiedoston huomiotta, commitoida muutokset tai palauttaa tiedoston alkuperäiseen tilaan [`git restore`-komennolla](https://git-scm.com/docs/git-restore).*
 
 
 ## 🚀 Pro task: Try-with-resources
