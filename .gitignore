@@ -7,3 +7,6 @@ build
 .vscode
 .devcontainer
 /bin
+
+# Ignore the test database
+/data/Chinook_Sqlite_TEST.sqlite

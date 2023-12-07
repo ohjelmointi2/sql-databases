@@ -39,14 +39,11 @@ application {
 }
 
 tasks.named('test') {
-    // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 
     testLogging {
-        showExceptions true
-        showCauses true
-        events "PASSED", "FAILED"
-        showStandardStreams true
+        events "passed", "skipped", "failed"
+        exceptionFormat "full"
     }
 }
 
