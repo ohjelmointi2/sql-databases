@@ -23,14 +23,14 @@ repositories {
 
 dependencies {
     // Use JUnit Jupiter for testing.
-    testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     // SQLite driver: https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
-    implementation 'org.xerial:sqlite-jdbc:3.43.0.0'
+    implementation 'org.xerial:sqlite-jdbc:3.45.2.0'
 
     // MySQL driver: https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
-    implementation 'com.mysql:mysql-connector-j:8.1.0'
+    implementation 'com.mysql:mysql-connector-j:8.3.0'
 }
 
 application {
@@ -44,6 +44,7 @@ tasks.named('test') {
     testLogging {
         events "passed", "skipped", "failed"
         exceptionFormat "full"
+        showStandardStreams true
     }
 }
 
