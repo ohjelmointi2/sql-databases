@@ -396,7 +396,7 @@ Lue [Apache License, https://github.com/xerial/sqlite-jdbc/blob/master/LICENSE](
 
 ## MySQL-ajurin lisenssi
 
-Lue [Preface and Legal Notices, https://dev.mysql.com/doc/connector-j/8.1/en/preface.html](https://dev.mysql.com/doc/connector-j/8.1/en/preface.html).
+Lue [Preface and Legal Notices, https://dev.mysql.com/doc/connector-j/en/preface.html](https://dev.mysql.com/doc/connector-j/en/preface.html).
 
 
 ## Tämä oppimateriaali
