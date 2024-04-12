@@ -40,19 +40,25 @@ Harjoituksissa käytettävän MySQL-tietokannan luontiskriptit löytyvät valmii
 
 ## Ajurin lisääminen projektiin
 
-JDBC-ajurit, kuten muutkin riippuvuudet, [voidaan ladata itse verkosta ja sijoittaa projektin hakemistoihin](https://www.google.com/search?q=add+jar+file+to+build+path). Riippuvuuksien hallinta on kuitenkin huomattavasti helpompaa, mikäli käytämme automaatiotyökalua kuten Gradle tai Maven. Tässä tehtäväpohjassa sekä SQLite- että MySQL-ajurit ovat  valmiiksi määritettynä Gradle:n [build.gradle](./build.gradle)-tiedostoon, josta koodieditorisi osaa asentaa ne automaattisesti<sup>1</sup>:
+JDBC-ajurit, kuten muutkin riippuvuudet, [voidaan ladata itse verkosta ja sijoittaa projektin hakemistoihin](https://www.google.com/search?q=add+jar+file+to+build+path). Riippuvuuksien hallinta on kuitenkin huomattavasti helpompaa, mikäli käytämme automaatiotyökalua kuten Gradle tai Maven. Tässä tehtäväpohjassa sekä SQLite- että MySQL-ajurit ovat  valmiiksi määritettynä Gradle:n [build.gradle](./build.gradle)-tiedostoon, josta koodieditorisi osaa asentaa ne automaattisesti:
 
 ```groovy
 dependencies {
     // SQLite driver: https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
-    implementation 'org.xerial:sqlite-jdbc:3.43.0.0'
+    implementation 'org.xerial:sqlite-jdbc:3.45.2.0'
+
+    // SQLite driver requires a SLF4J logger https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
+    implementation 'org.slf4j:slf4j-simple:2.0.12'
 
     // MySQL driver: https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
-    implementation 'com.mysql:mysql-connector-j:8.1.0'
+    // Uncomment the following line, if you wish to use a MySQL database:
+    // implementation 'com.mysql:mysql-connector-j:8.3.0'
 }
 ```
 
-<small><sup>1</sup> 🤞 toivottavasti</small>
+Oletuksena projektissa on riippuvuuksina SQLite:n JDBC-ajuri sekä ajurin käyttämä [SLF4J-lokituskirjasto](https://stackify.com/slf4j-java/).
+
+💡 *Voit poistaa kommentit MySQL-ajurin rivin alusta, mikäli haluat käyttää harjoituksessa MySQL-tietokantaa.*
 
 
 ## Valmis musiikkitietokanta
