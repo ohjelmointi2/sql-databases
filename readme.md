@@ -45,14 +45,14 @@ JDBC-ajurit, kuten muutkin riippuvuudet, [voidaan ladata itse verkosta ja sijoit
 ```groovy
 dependencies {
     // SQLite driver: https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
-    implementation 'org.xerial:sqlite-jdbc:3.45.2.0'
+    implementation 'org.xerial:sqlite-jdbc:3.+'
 
     // SQLite driver requires a SLF4J logger https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
-    implementation 'org.slf4j:slf4j-simple:2.0.12'
+    implementation 'org.slf4j:slf4j-simple:2.+'
 
     // MySQL driver: https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
     // Uncomment the following line, if you wish to use a MySQL database:
-    // implementation 'com.mysql:mysql-connector-j:8.3.0'
+    // implementation 'com.mysql:mysql-connector-j:8.+'
 }
 ```
 

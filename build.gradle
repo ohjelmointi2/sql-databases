@@ -3,7 +3,7 @@
  *
  * This generated file contains a sample Java application project to get you started.
  * For more details take a look at the 'Building Java & JVM projects' chapter in the Gradle
- * User Manual available at https://docs.gradle.org/7.6/userguide/building_java_projects.html
+ * User Manual available at https://docs.gradle.org/8.10/userguide/building_java_projects.html
  */
 
 plugins {
@@ -12,8 +12,8 @@ plugins {
 }
 
 java {
-    sourceCompatibility = 17
-    targetCompatibility = 17
+    sourceCompatibility = 21
+    targetCompatibility = 21
 }
 
 repositories {
@@ -23,18 +23,18 @@ repositories {
 
 dependencies {
     // Use JUnit Jupiter for testing.
-    testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.+")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     // SQLite driver: https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
-    implementation 'org.xerial:sqlite-jdbc:3.45.2.0'
+    implementation 'org.xerial:sqlite-jdbc:3.+'
 
     // SQLite driver requires a SLF4J logger https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
-    implementation 'org.slf4j:slf4j-simple:2.0.12'
+    implementation 'org.slf4j:slf4j-simple:2.+'
 
     // MySQL driver: https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
     // Uncomment the following line, if you wish to use a MySQL database:
-    // implementation 'com.mysql:mysql-connector-j:8.3.0'
+    // implementation 'com.mysql:mysql-connector-j:8.+'
 }
 
 application {

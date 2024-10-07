@@ -21,11 +21,11 @@ jobs:
       # Checkout the repository
       - uses: actions/checkout@v4
 
-      # Install Java 17. See https://github.com/education/autograding/issues/18
+      # Install Java 21. See https://github.com/education/autograding/issues/18
       - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
 
       # Make sure compilation succeeds before attempting to run autograding
       - name: Compile source code
