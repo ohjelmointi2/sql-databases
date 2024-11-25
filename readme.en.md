@@ -56,9 +56,9 @@ By default, the project includes dependencies for SQLite's JDBC driver and the [
 
 💡 *You can uncomment the line for the MySQL driver if you want to use a MySQL database in the exercise.*
 
-## Valmis musiikkitietokanta
+## Ready-made music database
 
-Käytämme tässä tehtävässä valmista musiikkitietokantaa nimeltä [**Chinook**](https://github.com/lerocha/chinook-database):
+In this exercise, we will use a ready-made music database called [**Chinook**](https://github.com/lerocha/chinook-database):
 
 > *"Chinook is a sample database available for SQL Server, Oracle, MySQL, etc."*
 >
@@ -66,9 +66,9 @@ Käytämme tässä tehtävässä valmista musiikkitietokantaa nimeltä [**Chinoo
 >
 > [Luis Rocha, Chinook Database](https://github.com/lerocha/chinook-database)
 
-Chinook-tietokannan tiedostot sijaitsevat valmiiksi tämän tehtäväpohjan [data](./data/)-hakemistossa.
+The Chinook database files are already located in the [data](./data/) directory of this exercise template.
 
-Chinook-tietokanta sisältää lukuisia tietokantatauluja ja paljon valmista dataa, mutta tässä harjoituksessa käytämme ainoastaan `Artist`- ja `Album`-tauluja. Kaikki muut taulut voit jättää harjoitustyössäsi huomioimatta:
+The Chinook database contains numerous tables and a lot of pre-existing data, but in this exercise, we will only use the `Artist` and `Album` tables. You can ignore all other tables in your exercise:
 
 ```mermaid
 classDiagram
