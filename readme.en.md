@@ -1,20 +1,18 @@
-# SQL-tietokantojen käyttö Javasta käsin
+# Using SQL Databases with Java
 
-Tässä tehtävässä opettelemme muodostamaan yhteyden tietokantaan Java-ohjelmasta käsin ja tekemään yksinkertaisia CRUD-toimenpiteitä (Create, Read, Update & Delete). Tutustumme ohessa käsitteisiin kuten JDBC, DAO ja PreparedStatement.
-
+In this exercise, we will learn how to connect to a database from a Java program and perform simple CRUD operations (Create, Read, Update & Delete). Along the way, we will get acquainted with concepts such as JDBC, DAO, and PreparedStatement.
 
 ## JDBC – Java Database Connectivity
 
-Javan standardikirjastoon määritelty [JDBC (Java Database Connectivity) -ohjelmointirajapinta](https://docs.oracle.com/javase/8/docs/technotes/guides/jdbc/) mahdollistaa Java-sovellusten yhdistämisen eri tyyppisiin SQL-tietokantoihin ja erilaisten kyselyiden sekä päivitysten tekemisen Java-koodista käsin.
+The [JDBC (Java Database Connectivity) API](https://docs.oracle.com/javase/8/docs/technotes/guides/jdbc/) defined in the Java standard library allows Java applications to connect to various types of SQL databases and perform different queries and updates from within Java code.
 
-JDBC ei rajoita sitä, minkä SQL-pohjaisten tietokantojen kanssa sitä voidaan käyttää, vaan eri tietokantoja voidaan hyödyntää käyttämällä niille toteutettuja valmiita ajureita. Sillä ei siis Java-koodisi näkökulmasta ole eroa, käytätkö tietokantana esimerkiksi [MySQL](https://www.mysql.com/)-, [PostgreSQL](https://www.postgresql.org/)- vai [SQLite](https://www.sqlite.org/index.html)-tyyppistä tietokantaa.
+JDBC does not limit which SQL-based databases it can be used with; different databases can be utilized by using the drivers implemented for them. Therefore, from the perspective of your Java code, it does not matter whether you use a [MySQL](https://www.mysql.com/), [PostgreSQL](https://www.postgresql.org/), or [SQLite](https://www.sqlite.org/index.html) type database.
 
-Tässä tehtävässä voit käyttää valintasi mukaan joko **MySQL**- tai **SQLite**-tietokantaa. Oletuksena käytämme tiedostopohjaista SQLite-tietokantaa. SQLiten kanssa emme tarvitse erillistä tietokantapalvelinta, joten meidän ei tarvitse huolehtia verkkoyhteyksistä, salasanoista tai asennuksista.
-
+In this task, you can use either a **MySQL** or **SQLite** database according to your preference. By default, we will use the file-based SQLite database. With SQLite, we do not need a separate database server, so we do not have to worry about network connections, passwords, or installations.
 
 ## SQLite
 
-SQLite-tietokanta on paikallinen muisti- tai tiedostopohjainen tietokanta, joka ei vaadi erillistä palvelinta, vaan se voidaan "sulauttaa" (embed) osaksi omaa sovellustamme:
+SQLite is a local memory or file-based database that does not require a separate server; instead, it can be "embedded" as part of our application:
 
 > *"In contrast to many other database management systems, SQLite is not a client–server database engine. Rather, it is embedded into the end program."*
 >
@@ -22,14 +20,13 @@ SQLite-tietokanta on paikallinen muisti- tai tiedostopohjainen tietokanta, joka 
 >
 > [https://en.wikipedia.org/wiki/SQLite](https://en.wikipedia.org/wiki/SQLite)
 
-SQLite toimii Java-ohjelman näkökulmasta samalla tavalla kuin erilliset tietokantapalvelimet. Myös SQL-kyselyt ovat pääosin samat, esimerkiksi `SELECT ArtistId, Name FROM Artist`. "Keveydestään" ja tiedostopohjaisuudestaan huolimatta SQLite on erittäin merkityksellinen tietokanta ja sitä [käytetäänkin mm. suosituimmissa verkkoselaimissa ja puhelimissa](https://www.sqlite.org/famous.html):
+From the perspective of a Java program, SQLite operates in the same way as separate database servers. The SQL queries are also mostly the same, for example, `SELECT ArtistId, Name FROM Artist`. Despite its "lightweight" and file-based nature, SQLite is a very significant database and [is used in popular web browsers and phones](https://www.sqlite.org/famous.html):
 
 > *"SQLite is built into all mobile phones and most computers and comes bundled inside countless other applications that people use every day."*
 >
 > https://www.sqlite.org/
 
-Harjoituksessa käytettävä SQLite-tietokanta löytyy valmiina tiedostona tämän projektin [data](./data/)-hakemistosta.
-
+The SQLite database used in the exercise can be found as a ready-made file in the [data](./data/) directory of this project.
 
 ## ⭐ MySQL
 
