@@ -111,18 +111,17 @@ classDiagram
   Track --|> Genre: GenreId
 ```
 
-💡 *Voit vapaasti tutkia SQLite tietokannan sisältöä avaamalla sen [SQLite-komentorivityökalulla](https://sqlite.org/cli.html) tai jollain [lukuisista graafisista käyttöliittymistä](https://www.google.com/search?q=sqlite+gui). MySQL-tietokannan tutkimisessa voit käyttää valitsemaasi työkalua.*
+💡 *You are free to explore the contents of the SQLite database by opening it with the [SQLite command-line tool](https://sqlite.org/cli.html) or one of the [many graphical interfaces](https://www.google.com/search?q=sqlite+gui). For exploring the MySQL database, you can use the tool of your choice.*
 
-💡 *Jos tulet vahingossa muuttaneeksi tiedostoja ja haluat perua muutoksen, voit palauttaa versionhallinnasta viimeisimmän version komennolla `git restore data/TIEDOSTONIMI`. Windowsissa muuta kauttaviivan `/` tilalle kenoviiva `\`.*
+💡 *If you accidentally modify files and want to revert the changes, you can restore the latest version from version control with the command `git restore data/FILENAME`. On Windows, replace the forward slash `/` with a backslash `\`.*
 
-**Lisätietoja tietokannasta:**
+**More Information about the database:**
 
-* UML-kaavio: [Chinook-tietokannan Wiki](https://github.com/lerocha/chinook-database/wiki/Chinook-Schema)
-* Valmis tietokanta: [Chinook_Sqlite.sqlite](https://github.com/lerocha/chinook-database/raw/master/ChinookDatabase/DataSources/Chinook_Sqlite.sqlite)
-* Dokumentaatio: https://github.com/lerocha/chinook-database
-* SQL-luontikäskyt: [Chinook_Sqlite.sql](https://raw.githubusercontent.com/lerocha/chinook-database/master/ChinookDatabase/DataSources/Chinook_Sqlite.sql)
-* Tietokannan lisenssi: [MIT](https://github.com/lerocha/chinook-database/blob/master/LICENSE.md)
-
+* UML Diagram: [Chinook Database Wiki](https://github.com/lerocha/chinook-database/wiki/Chinook-Schema)
+* Ready-made Database: [Chinook_Sqlite.sqlite](https://github.com/lerocha/chinook-database/raw/master/ChinookDatabase/DataSources/Chinook_Sqlite.sqlite)
+* Documentation: https://github.com/lerocha/chinook-database
+* SQL Creation Commands: [Chinook_Sqlite.sql](https://raw.githubusercontent.com/lerocha/chinook-database/master/ChinookDatabase/DataSources/Chinook_Sqlite.sql)
+* Database License: [MIT](https://github.com/lerocha/chinook-database/blob/master/LICENSE.md)
 
 ## Pääohjelman suorittaminen
 
