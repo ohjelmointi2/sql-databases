@@ -52,10 +52,9 @@ dependencies {
 }
 ```
 
-Oletuksena projektissa on riippuvuuksina SQLite:n JDBC-ajuri sekä ajurin käyttämä [SLF4J-lokituskirjasto](https://stackify.com/slf4j-java/).
+By default, the project includes dependencies for SQLite's JDBC driver and the [SLF4J logging library](https://stackify.com/slf4j-java/) used by the driver.
 
-💡 *Voit poistaa kommentit MySQL-ajurin rivin alusta, mikäli haluat käyttää harjoituksessa MySQL-tietokantaa.*
-
+💡 *You can uncomment the line for the MySQL driver if you want to use a MySQL database in the exercise.*
 
 ## Valmis musiikkitietokanta
 
