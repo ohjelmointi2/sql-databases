@@ -30,14 +30,13 @@ The SQLite database used in the exercise can be found as a ready-made file in th
 
 ## ⭐ MySQL
 
-MySQL-tietokannan käyttäminen edellyttää tietokantapalvelinta ja tietokannan luontia kyseiselle palvelimelle. Ohjelmointi 2 -kurssin puolesta MySQL-palvelimen asennukseen ja tietokannan luontiin voidaan antaa vain rajallisesti ohjausta. Kannustamme kuitenkin käyttämään tässä harjoituksessa MySQL:ää, mikäli pystyt käyttämään sitä itseohjautuvasti.
+Using a MySQL database requires a database server and creating a database on that server. The Programming 2 course can only provide limited guidance on installing the MySQL server and creating the database. However, we encourage you to use MySQL in this exercise if you can manage it independently.
 
-Harjoituksissa käytettävän MySQL-tietokannan luontiskriptit löytyvät valmiina tiedostosta [data/Chinook_MySql_AutoIncrementPKs.sql](./data/Chinook_MySql_AutoIncrementPKs.sql).
+The creation scripts for the MySQL database used in the exercises can be found in the file [data/Chinook_MySql_AutoIncrementPKs.sql](./data/Chinook_MySql_AutoIncrementPKs.sql).
 
+## Adding the driver to the project
 
-## Ajurin lisääminen projektiin
-
-JDBC-ajurit, kuten muutkin riippuvuudet, [voidaan ladata itse verkosta ja sijoittaa projektin hakemistoihin](https://www.google.com/search?q=add+jar+file+to+build+path). Riippuvuuksien hallinta on kuitenkin huomattavasti helpompaa, mikäli käytämme automaatiotyökalua kuten Gradle tai Maven. Tässä tehtäväpohjassa sekä SQLite- että MySQL-ajurit ovat  valmiiksi määritettynä Gradle:n [build.gradle](./build.gradle)-tiedostoon, josta koodieditorisi osaa asentaa ne automaattisesti:
+JDBC drivers, like other dependencies, [can be downloaded from the internet and placed in the project directories](https://www.google.com/search?q=add+jar+file+to+build+path). However, dependency management is much easier if we use an automation tool like Gradle or Maven. In this exercise template, both SQLite and MySQL drivers are pre-configured in Gradle's [build.gradle](./build.gradle) file, from which your code editor can automatically install them:
 
 ```groovy
 dependencies {
