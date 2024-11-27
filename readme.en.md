@@ -250,30 +250,30 @@ To separate database logic from the rest of the code, the DAO pattern is often u
 >
 > Oracle. Data Access Object - Also Known As DAO. https://www.oracle.com/java/technologies/data-access-object.html
 
-**Tehtävä**
+**Exercise**
 
-Tehtäväpohjan paketissa [databases.part02](./src/main/java/databases/part02/) on valmiina luokat [`Artist`](./src/main/java/databases/part02/Artist.java), [`ArtistDAO`](./src/main/java/databases/part02/ArtistDAO.java) sekä [`ArtistAppMain`](./src/main/java/databases/part02/ArtistAppMain.java):
+The task template package [databases.part02](./src/main/java/databases/part02/) includes the classes [`Artist`](./src/main/java/databases/part02/Artist.java), [`ArtistDAO`](./src/main/java/databases/part02/ArtistDAO.java), and [`ArtistAppMain`](./src/main/java/databases/part02/ArtistAppMain.java):
 
 1. **Artist:**
 
-    Tämä luokka edustaa yksittäisiä artisteja sovelluksessa ja on "aivan tavallinen" luokka. Luokassa ei ole tietokanta- eikä käyttöliittymälogiikkaa. Tällaisesta luokasta käytetään usein nimitystä *model* tai *entity*.
+    This class represents individual artists in the application and is a "plain old" class. It does not contain any database or user interface logic. Such a class is often referred to as a *model* or *entity*.
 
 2. **ArtistDAO:**
 
-    ArtistDAO (Data Access Object) -luokka toimii välittäjänä sovelluksen liiketoimintalogiikan ja tietokannan välillä. Sen pääasiallinen tehtävä on tarjota metodeja tietokantaoperaatioihin, jotka liittyvät "Artist" -entiteettiin. Näitä ovat esim artistien luonti, hakeminen, päivittämiseen ja poistamiseen. Tietokantaoperaatioiden toteuttaminen erilliseen Java-luokkaan helpottaa muun sovelluksen työskentelyä tietokannan kanssa, koska muiden luokkien ei tarvitse tuntea taustalla olevaa SQL:ää tai tietokantaan liittyviä yksityiskohtia.
+    The ArtistDAO (Data Access Object) class acts as an intermediary between the application's business logic and the database. Its main task is to provide methods for database operations related to the "Artist" entity. These include creating, retrieving, updating, and deleting artists. Implementing database operations in a separate Java class makes it easier for the rest of the application to work with the database, as other classes do not need to know the underlying SQL or database details.
 
-    💡 *ArtistDAO-luokan rooli on ainoastaan toimia välittäjänä tietokannan ja sovelluslogiikan välillä. DAO-luokissa ei ole lainkaan käyttöliittymään liittyvää logiikkaa, kuten tulosteita.*
+    💡 *The role of the ArtistDAO class is solely to act as an intermediary between the database and the application logic. DAO classes do not contain any user interface logic, such as print statements.*
 
 3. **ArtistAppMain:**
 
-    Tämä luokka toimii uutena pääohjelmana, joka hyödyntää ArtistDAO-luokkaa. Loogisesti tämä luokka vastaa edellisessä osassa käyttämääsi [`JdbcDemoMain`-luokkaa](./src/main/java/databases/part01/JdbcDemoMain.java), mutta tällä kertaa se ei sisällä lainkaan tietokantalogiikkaa.
+    This class serves as the new main program, utilizing the ArtistDAO class. Logically, this class corresponds to the [`JdbcDemoMain`](./src/main/java/databases/part01/JdbcDemoMain.java) class you used in the previous part, but this time it does not contain any database logic.
 
-Yllä esitetty vastuunjakaminen seuraa hyviä periaatteita, jotka tekevät sovelluksen kehittämisestä, ylläpidosta ja skaalautuvuudesta helpompaa. Nyt kun ohjelma on jaettu pienempiin osiin, edellisessä osassa käytetty `main`-metodi saadaan näyttämään paljon yksinkertaisemmalta:
+The division of responsibilities outlined above follows good principles that make the development, maintenance, and scalability of the application easier. Now that the program is divided into smaller parts, the `main` method used in the previous part can be made to look much simpler:
 
 ```java
 /**
- * Tämä metodi vastaa toiminnallisesti osassa 1 käsiteltyä metodia, joka
- * oli paljon pidempi ja monimutkaisempi.
+ * This method functionally corresponds to the method discussed in Part 1,
+ * which was much longer and more complex.
  */
 public static void main(String[] args) {
     ArtistDAO artistDAO = new ArtistDAO(JDBC_URL);
@@ -285,11 +285,11 @@ public static void main(String[] args) {
 }
 ```
 
-Tehtävän tässä osassa sinun tulee toteuttaa [`ArtistDAO`-luokkaan](./src/main/java/databases/part02/ArtistDAO.java) metodit `getArtists` sekä `getArtistById`. Metodien otsikot ja Javadoc-kommentit löytyvät luokasta valmiina.
+In this part of the exercise, you need to implement the `getArtists` and `getArtistById` methods in the [`ArtistDAO`](./src/main/java/databases/part02/ArtistDAO.java) class. The method headers and Javadoc comments are already provided in the class.
 
-Voit suorittaa [`ArtistAppMain`-luokan](./src/main/java/databases/part02/ArtistAppMain.java) koodieditorillasi. Aluksi kyseinen luokka ei tulosta mitään, mutta toteutettuasi DAO-luokan tulosteen pitäisi olla sama kuin tehtävän edellisessä osassa.
+You can run the [`ArtistAppMain`](./src/main/java/databases/part02/ArtistAppMain.java) class in your code editor. Initially, this class will not print anything, but after implementing the DAO class, the output should be the same as in the previous part of the task.
 
-DAO-luokkasi testataan yksikkötesteillä, jotka on kirjoitettu [`ArtistDAOTest`-testiluokkaan](./src/test/java/databases/part02/ArtistDAOTest.java). Voit suorittaa testit joko koodieditorisi testaustyökalulla ([VS Code](https://code.visualstudio.com/docs/java/java-testing), [Eclipse](https://www.vogella.com/tutorials/JUnitEclipse/article.html)) tai [Gradle-automaatiotyökalulla](https://docs.gradle.org/current/userguide/java_testing.html):
+Your DAO class will be tested with unit tests written in the [`ArtistDAOTest`](./src/test/java/databases/part02/ArtistDAOTest.java) test class. You can run the tests using your code editor's testing tool ([VS Code](https://code.visualstudio.com/docs/java/java-testing), [Eclipse](https://www.vogella.com/tutorials/JUnitEclipse/article.html)e) or the [Gradle automation tool](https://docs.gradle.org/current/userguide/java_testing.html):
 
 ```sh
 ./gradlew test --tests ArtistDAOTest      # unix
