@@ -296,13 +296,13 @@ Your DAO class will be tested with unit tests written in the [`ArtistDAOTest`](.
 .\gradlew.bat test --tests ArtistDAOTest  # windows
 ```
 
-💡 *Älä muuta valmiiden metodien nimiä, parametreja tai paluuarvojen tyyppejä. Muutokset saattavat aiheuttaa ongelmia testauksen kanssa.*
+💡 *Do not change the names, parameters, or return types of the provided methods. Changes may cause issues with testing.*
 
-💡 *Yritä välttää toistamasta pidempiä pätkiä samaa koodia molemmissa metodeissa. Saat toteuttaa tehtävänannossa mainittujen luokkien ja metodien lisäksi myös muita luokkia ja metodeja. Esimerkiksi `Database`-luokka yhteyksien avaamiseksi ja sulkemiseksi voi olla hyvä idea. Toisaalta voit toteuttaa erillisen apumetodin resurssien sulkemiseksi. Metodisi saavat myös kutsua toisiaan: voit kutsua `getArtistById`-metodissa `getArtists`-metodia (tehokkuudella ei tässä tehtävässä ole painoarvoa).*
+💡 *Try to avoid repeating longer sections of the same code in both methods. You are allowed to implement additional classes and methods besides those mentioned in the task description. For example, a `Database` class for opening and closing connections might be a good idea. Alternatively, you can implement a separate helper method for closing resources. Your methods can also call each other: you can call the `getArtists` method within the `getArtistById` method (efficiency is not a concern in this task).*
 
-💡 *Tulet mahdollisesti huomaamaan, että yhteyksien sulkeminen "käsin" vaatii monta operaatiota ja koodiriviä. Voit vaihtoehtoisesti perehtyä [Javan try-with-resources](https://www.baeldung.com/java-try-with-resources)-syntaksiin, jolla saat suljettua resurssit automaattisesti.*
+💡 *You may find that closing connections "manually" requires many operations and lines of code. Alternatively, you can familiarize yourself with [Java's try-with-resources](https://www.baeldung.com/java-try-with-resources) syntax, which allows you to close resources automatically.*
 
-💡 *Testeissä käytetään eri tietokantaa kuin pääohjelmassa. Tutustu tarvittaessa [`TestUtils`-luokkaan](./src/test/java/databases/utils/TestUtils.java) ja sen sisältämiin tietokannan luontikäskyihin.*
+💡 *The tests use a different database than the main program. If necessary, refer to the [`TestUtils`](./src/test/java/databases/utils/TestUtils.java) class and its database creation commands.*
 
 
 ## Osa 3: Tiedon lisääminen, päivittäminen ja poistaminen *(soveltaminen, 40 %)*
