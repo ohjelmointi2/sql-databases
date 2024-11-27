@@ -317,10 +317,6 @@ The project package [databases.part03](./src/main/java/databases/part03/) includ
 
 The methods are already present in the [`AlbumDAO`](./src/main/java/databases/part03/AlbumDAO.java) class, and their comments describe the required functionalities for each method.
 
-**SQL-injektiot ja tietoturva**
-
-Huomaa, että SQL-kyselyjen muodostaminen merkkijonoja yhdistelemällä aiheuttaa tietoturvaongelmia, kuten [tämä auton rekisterikilpi](https://hackaday.com/wp-content/uploads/2014/04/18mpenleoksq8jpg.jpg) ja oheinen sarjakuva havainnollistavat:
-
 **SQL Injections and Security**
 
 Note that constructing SQL queries by concatenating strings causes security issues, as illustrated by [this car license plate](https://hackaday.com/wp-content/uploads/2014/04/18mpenleoksq8jpg.jpg) and the accompanying comic:
@@ -375,25 +371,24 @@ Alternatively, environment variables can be defined at the system level:
 ----
 
 
-# Lisenssit
+# Licenses
 
-## Chinook-tietokanta
+## Chinook database
 
-Chinook-tietokannan on luonut [Luis Rocha](https://github.com/lerocha) ja se on lisensoitu [MIT-lisenssillä](https://github.com/lerocha/chinook-database/blob/master/LICENSE.md).
+Chinook database is created by [Luis Rocha](https://github.com/lerocha) and it is licensed under the [MIT license](https://github.com/lerocha/chinook-database/blob/master/LICENSE.md).
 
+## SQLite driver's license
 
-## SQLite-ajurin lisenssi
-
-Lue [Apache License, https://github.com/xerial/sqlite-jdbc/blob/master/LICENSE](https://github.com/xerial/sqlite-jdbc/blob/master/LICENSE).
-
-
-## MySQL-ajurin lisenssi
-
-Lue [Preface and Legal Notices, https://dev.mysql.com/doc/connector-j/en/preface.html](https://dev.mysql.com/doc/connector-j/en/preface.html).
+Read [Apache License, https://github.com/xerial/sqlite-jdbc/blob/master/LICENSE](https://github.com/xerial/sqlite-jdbc/blob/master/LICENSE).
 
 
-## Tämä oppimateriaali
+## MySQL driver's license
 
-Tämän tehtävän on kehittänyt Teemu Havulinna ja se on lisensoitu [Creative Commons BY-NC-SA -lisenssillä](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+Read [Preface and Legal Notices, https://dev.mysql.com/doc/connector-j/en/preface.html](https://dev.mysql.com/doc/connector-j/en/preface.html).
 
-Tehtävänannon, lähdekoodien ja testien toteutuksessa on hyödynnetty ChatGPT 3.5 -kielimallia sekä GitHub copilot -tekoälyavustinta.
+
+## This material
+
+This exercise is made by Teemu Havulinna and translated to English by Kalle Ilves and it is licensed under a [Creative Commons BY-NC-SA license](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+
+ChatGPT 3.5 language model and GitHub copilot AI assistant has been used to implement the exercise.
