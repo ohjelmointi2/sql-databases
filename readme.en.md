@@ -321,58 +321,56 @@ The methods are already present in the [`AlbumDAO`](./src/main/java/databases/pa
 
 Huomaa, että SQL-kyselyjen muodostaminen merkkijonoja yhdistelemällä aiheuttaa tietoturvaongelmia, kuten [tämä auton rekisterikilpi](https://hackaday.com/wp-content/uploads/2014/04/18mpenleoksq8jpg.jpg) ja oheinen sarjakuva havainnollistavat:
 
+**SQL Injections and Security**
+
+Note that constructing SQL queries by concatenating strings causes security issues, as illustrated by [this car license plate](https://hackaday.com/wp-content/uploads/2014/04/18mpenleoksq8jpg.jpg) and the accompanying comic:
+
 [![Exploits of a Mom](https://imgs.xkcd.com/comics/exploits_of_a_mom.png)](https://xkcd.com/327/)
 
-*Kuva: Randall Munroe. Exploits of a Mom. [https://xkcd.com/327/](https://xkcd.com/327/). [CC BY-NC 2.5](https://creativecommons.org/licenses/by-nc/2.5/)*
+*Picture: Randall Munroe. Exploits of a Mom. [https://xkcd.com/327/](https://xkcd.com/327/). [CC BY-NC 2.5](https://creativecommons.org/licenses/by-nc/2.5/)*
 
-Muista siis käyttää `PreparedStatement`-luokkaa ja sen `setString`-, `setLong`- ja muita metodeita aina lisätessäsi kyselyihin parametreja. `set...`-metodit huolehtivat siitä, että annettua dataa ei tulkita osaksi kyselyä, eli sitä käsitellään vain datana.
+So remember to use the `PreparedStatement` class and its `setString`, `setLong`, and other methods whenever you add parameters to queries. The `set...` methods ensure that the provided data is not interpreted as part of the query, meaning it is treated only as data.
 
+**Testing the solution**
 
-**Ratkaisun testaaminen**
-
-Albumien käsittelemiseksi ei ole valmista pääohjelmaa, mutta voit halutessasi luoda uuden pääohjelman, muokata edellisen osan ohjelmaa tai hyödyntää [`AlbumDAOTest`-yksikkötestejä](./src/test/java/databases/part03/AlbumDAOTest.java). `AlbumDAOTest` on tekniseltä toteutukseltaan melko erilainen kuin aikaisemmat testit, koska siinä joudutaan alustamaan testitietokanta aina samaan alkupisteeseen ennen testejä. Voit kuitenkin suorittaa sen aikan kuten muutkin testit, joko koodieditorilla tai Gradlella:
+There is no ready-made main program for handling albums, but you can create a new main program, modify the program from the previous part, or use the [`AlbumDAOTest`](./src/test/java/databases/part03/AlbumDAOTest.java) unit tests. `AlbumDAOTest` is technically quite different from the previous tests because it requires initializing the test database to the same starting point before the tests. However, you can run it just like the other tests, either with your code editor or Gradle:
 
 ```
 ./gradlew test --tests AlbumDAOTest      # unix
 .\gradlew.bat test --tests AlbumDAOTest  # windows
 ```
 
-
 ## 🚀 Pro task: Try-with-resources
 
-Yhteyksien sulkeminen "käsin" kutsumalla `close()`-metodia vaatii monta operaatiota ja lukuisia ylimääräisiä koodirivejä. Voit vaihtoehtoisesti perehtyä [Javan try-with-resources](https://www.baeldung.com/java-try-with-resources)-syntaksiin, jolla saat suljettua resurssit automaattisesti.
+Closing connections "manually" by calling the `close()` method requires many operations and numerous extra lines of code. Alternatively, you can familiarize yourself with [Java's try-with-resources](https://www.baeldung.com/java-try-with-resources) syntax, which allows you to close resources automatically.
 
+## 🚀 Pro task: using environment variables
 
+Often, the same code is run in numerous different environments, such as on various developers' personal Windows, Mac, and Linux machines. In addition to developers' personal machines, the same code must work in testing, staging, and production environments, which may be located in the cloud or in an on-premises data center. Different environments use different databases and settings, so they require different connection URLs, usernames, and other variable information to use the databases.
 
-## 🚀 Pro task: ympäristömuuttujan hyödyntäminen
+Environment-specific settings are not written directly into the program code to avoid having to change, compile, and package the code separately for each execution environment. Usernames, passwords, and API keys are also not stored in the program code or version control for security reasons.
 
-Usein samaa koodia suoritetaan lukuisissa erilaisissa ympäristöissä, kuten useiden eri kehittäjien omilla Windows-, Mac- ja Linux- koneilla. Kehittäjien henkilökohtaisten koneiden lisäksi saman koodin täytyy toimia testaus-, staging- ja tuotantoympäristössä, joka saattaa sijaita pilvipalvelussa tai omassa konesalissa. Eri ympäristöissä käytetään eri tietokantoja ja asetuksia, joten niissä tarvitaan eri yhteysosoitteet, käyttäjätunnukset ja muita muuttuvia tietoja esimerkiksi tietokantojen käyttämiseksi.
+A common way to solve the above problems is to set environment-specific and secret values in the operating system's environment variables. Using environment variables, the application can use, for example, development, test, or production databases without changing the program code. Secret information, such as passwords, is also kept out of the program code.
 
-Ympäristökohtaisia asetuksia ei kirjoiteta suoraan ohjelmakoodiin, jotta koodia ei jouduta muuttamaan, kääntämään ja paketoimaan erikseen jokaista suoritusympäristöä varten. Käyttäjätunnuksia, salasanoja ja API-avaimia ei puolestaan haluta tallentaa ohjelmakoodiin tai versionhallintaan tietoturvasyistä.
-
-Yleinen tapa ratkaista edellä esitettyjä ongelmia on asettaa ympäristökohtaisesti vaihtuvat sekä salaiset arvot käyttöjärjestelmän ympäristömuuttujiin. Sovellus voi ympäristömuuttujien avulla käyttää esimerkiksi kehitys-, testi- tai tuotantokantaa ilman, että ohjelmakoodia muutetaan. Salaiset tiedot, kuten salasanat, jäävät myös pois ohjelmakoodista.
-
-Ympäristömuuttujat ovat eräänlainen käyttöjärjestelmäkohtainen Map-tietorakenne. Ympäristömuuttujien arvoja voidaan Javassa lukea `System.getenv`-metodilla esimerkiksi seuraavasti.
+Environment variables are a kind of operating system-specific Map data structure. The values of environment variables can be read in Java using the `System.getenv` method, for example, as follows.
 
 ```diff
-+ // merkkijono luetaan DATABASE-nimisestä ympäristömuuttujasta: 👍
++ // the string is read from an environment variable named DATABASE: 👍
 + private static final String JDBC_URL = System.getenv("DATABASE");
 
-- // kovakoodattu yhteysosoite, jossa ympäristökohtainen osoite ja selkokielinen salasana: 😱
+- // hardcoded connection URL with an environment-specific address and plaintext password: 😱
 - private static final String JDBC_URL = "jdbc:mysql://localhost:3306/Chinook?user=root&password=ThisPasswordWillLeak";
 ```
 
+### Setting environment variables
 
-### Ympäristömuuttujien asettaminen
+You can set an environment variable in VS Code by modifying the ["Run and debug" settings](https://code.visualstudio.com/docs/java/java-debugging#_configuration-options) (see the `env` section). In Eclipse, you can add environment variables to your program following the instructions in this [Stack Overflow thread](https://stackoverflow.com/a/12810433).
 
-Voit asettaa VS Code:ssa ympäristömuuttujan muuttamalla ["Run and debug"-asetuksia](https://code.visualstudio.com/docs/java/java-debugging#_configuration-options) (ks. kohta `env`). Eclipsessä voit lisätä ohjelmallesi ympäristömuuttujia tämän [Stack Overflow -ketjun](https://stackoverflow.com/a/12810433) ohjeiden mukaisesti.
+Alternatively, environment variables can be defined at the system level:
 
-Vaihtoehtoisesti ympäristömuuttujia voidaan määritellä koko järjestelmän tasolla:
-
-* [Windowsissa](https://www.google.com/search?q=windows+set+environment+variable)
-* [Linuxissa](https://www.google.com/search?q=linux+set+environment+variable)
-* [MacOS:ssa](https://www.google.com/search?q=macos+set+environment+variable).
-
+* [Windows](https://www.google.com/search?q=windows+set+environment+variable)
+* [Linux](https://www.google.com/search?q=linux+set+environment+variable)
+* [MacOS](https://www.google.com/search?q=macos+set+environment+variable).
 
 ----
 
