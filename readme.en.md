@@ -304,20 +304,18 @@ Your DAO class will be tested with unit tests written in the [`ArtistDAOTest`](.
 
 💡 *The tests use a different database than the main program. If necessary, refer to the [`TestUtils`](./src/test/java/databases/utils/TestUtils.java) class and its database creation commands.*
 
+## Part 3: adding, updating, and deleting data *(applying, 40%)*
 
-## Osa 3: Tiedon lisääminen, päivittäminen ja poistaminen *(soveltaminen, 40 %)*
+In the previous parts, we retrieved data using the `executeQuery` method. This time, the goal is to add, update, and delete data using the [`executeUpdate` method](https://docs.oracle.com/javase/8/docs/api/java/sql/PreparedStatement.html#executeUpdate--).
 
-Edellisissä osissa olemme hakeneet tietoa `executeQuery`-metodilla. Tällä kertaa tarkoituksena on lisätä, päivittää ja poistaa tietoa [`executeUpdate`-metodilla](https://docs.oracle.com/javase/8/docs/api/java/sql/PreparedStatement.html#executeUpdate--).
-
-Tämän projektin paketista [databases.part03](./src/main/java/databases/part03/) löytyy luokat [`Album`](./src/main/java/databases/part03/Album.java) sekä [`AlbumDAO`](./src/main/java/databases/part03/AlbumDAO.java). Luokkien roolit noudattavat samaa mallia kuin `Artist` ja `ArtistDAO`. Toteuta [`AlbumDAO`-luokkaan](./src/main/java/databases/part03/AlbumDAO.java) seuraavat operaatiot:
+The project package [databases.part03](./src/main/java/databases/part03/) includes the classes [`Album`](./src/main/java/databases/part03/Album.java) and [`AlbumDAO`](./src/main/java/databases/part03/AlbumDAO.java). The roles of these classes follow the same pattern as `Artist` and `ArtistDAO`. Implement the following operations in the [`AlbumDAO`](./src/main/java/databases/part03/AlbumDAO.java) class:
 
 * `getAlbumsByArtist(Artist artist)`
 * `addAlbum(Album album)`
 * `updateAlbum(Album album)`
 * `deleteAlbum(Album album)`
 
-Metodit löytyvät [`AlbumDAO`-luokasta](./src/main/java/databases/part03/AlbumDAO.java) valmiina ja niiden kommentit kuvailevat tarkemmin kultakin metodilta vaaditut toiminnot.
-
+The methods are already present in the [`AlbumDAO`](./src/main/java/databases/part03/AlbumDAO.java) class, and their comments describe the required functionalities for each method.
 
 **SQL-injektiot ja tietoturva**
 
