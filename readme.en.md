@@ -212,18 +212,17 @@ classDiagram
     PreparedStatement --> ResultSet: executes
 ```
 
+## Part 1: creating a query and handling results *(basics, 20%)*
 
-## Osa 1: Kyselyn luonti ja tulosten käsittely *(perusteet, 20 %)*
+In the first part of the exercise, you need to familiarize yourself with the [**JdbcDemoMain**](./src/main/java/databases/part01/JdbcDemoMain.java) main program class and make two small changes to it.
 
-Tehtävän ensimmäisessä osassa sinun tulee perehtyä [**JdbcDemoMain**](./src/main/java/databases/part01/JdbcDemoMain.java)-pääohjelmaluokkaan ja tehdä siihen kaksi pientä muutosta.
+**Modifying the Query**
 
-**Kyselyn muuttaminen**
+In the given database query, the data is sorted by the `ArtistId` column. Modify the query so that the artists are sorted alphabetically by name.
 
-Annetussa tietokantakyselyssä aineisto on järjestetty `ArtistId`-sarakkeen mukaan. Muuta kyselyä siten, että järjestät artistit aakkosjärjestykseen nimen mukaan.
+**Handling the Result Set**
 
-**Tulosjoukon käsittely**
-
-Pääohjelman alkuperäisessä versiossa jokaisen artistin kohdalla tulostetaan artistin nimi. Muuta ohjelmaa siten, että samalle riville, artistin nimen jälkeen, tulostetaan myös artistin id (`ArtistId`):
+In the original version of the main program, the name of each artist is printed. Modify the program so that on the same line, after the artist's name, the artist's id (`ArtistId`) is also printed:
 
 ```
 A Cor Do Som (43)
@@ -233,14 +232,13 @@ Aaron Goldberg (202)
 Academy of St. Martin in the Fields & Sir Neville Marriner (214)
 ```
 
-💡 *Huomaa, että nyt artistit ovat hieman eri järjestyksessä. AC/DC ei ole enää ensimmäisenä.*
+💡 *Note that the artists are now in a slightly different order. AC/DC is no longer first.*
 
-Tämä osa tehtävästä tarkastetaan tutkimalla ohjelmasi tulostetta, koska `System.out.println`-kutsuihin perustuvan ohjelmalogiikan testaaminen ohjelmallisesti on hankalaa. Ratkaisu rajoittaa myös koodin uudelleenkäyttöä, koska `main`-metodi ei palauta mitään. Jos tarvitset artistien listausta myöhemmin toisessa osassa ohjelmaa, joudut toistamaan samaa logiikkaa, mikä on virhealtista ja tekee koodista hankalammin ylläpidettävää.
+This part of the task will be checked by examining your program's output, as testing program logic based on `System.out.println` calls is difficult programmatically. This solution also limits code reuse because the `main` method does not return anything. If you need the list of artists later in another part of the program, you will have to repeat the same logic, which is error-prone and makes the code harder to maintain.
 
-Parempi tapa on eristää logiikka omiin metodeihinsa, jotta sitä voidaan kutsua ohjelman muista osista tai muista ohjelmista. Ohjelman jakaminen osiin helpottaa siis sen **testaamista** ja tekee koodista **uudelleenkäytettävämpää** ja **ylläpidettävämpää**.
+A better approach is to isolate the logic into its own methods so that it can be called from other parts of the program or other programs. Dividing the program into parts thus makes it easier to **test** and makes the code more **reusable** and **maintainable**.
 
-🚀 *Jos olet tarkkana, huomaat että yllä SQLite järjesti artistin "AC/DC" virheellisesti ennen artistia "Aaron...". Tämä johtuu siitä, että SQLite:n ORDER BY -vertailu on kirjainkoosta riippuvainen. "Lähes oikea" järjestys kelpaa tämän tehtävän osalta, mutta voit halutessasi järjestää nimet myös kirjainkoosta riippumatta [tämän keskustelun](https://stackoverflow.com/a/2413833) vinkkien mukaan.*
-
+🚀 *If you are observant, you will notice that SQLite incorrectly sorted the artist "AC/DC" before the artist "Aaron...". This is because SQLite's ORDER BY comparison is case-sensitive. "Almost correct" order is acceptable for this task, but if you wish, you can also sort the names case-insensitively using the tips from [this discussion](https://stackoverflow.com/a/2413833).*
 
 ## Osa 2: Olioihin perustuva lähestymistapa *(perusteet, 40 %)*
 
