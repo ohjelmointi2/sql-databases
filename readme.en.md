@@ -123,10 +123,6 @@ classDiagram
 * SQL Creation Commands: [Chinook_Sqlite.sql](https://raw.githubusercontent.com/lerocha/chinook-database/master/ChinookDatabase/DataSources/Chinook_Sqlite.sql)
 * Database License: [MIT](https://github.com/lerocha/chinook-database/blob/master/LICENSE.md)
 
-## Pääohjelman suorittaminen
-
-Tehtäväpohja sisältää pääohjelman [**JdbcDemoMain**](./src/main/java/databases/part01/JdbcDemoMain.java). Tämä pääohjelman tarkoitus on auttaa sinua hahmottamaan ja kokeilemaan, miten yhteyksiä muodostetaan ja miten niiden avulla voidaan suorittaa kyselyitä. Voit suorittaa [pääohjelman](./src/main/java/databases/part01/JdbcDemoMain.java) joko koodieditorisi run-painikkeella tai Gradle:n avulla:
-
 ## Running the main program
 
 The task template includes the main program [**JdbcDemoMain**](./src/main/java/databases/part01/JdbcDemoMain.java). The purpose of this main program is to help you understand and experiment with how connections are established and how queries can be executed using them. You can run the [main program](./src/main/java/databases/part01/JdbcDemoMain.java) either using the run button in your code editor or with Gradle:
@@ -240,15 +236,15 @@ A better approach is to isolate the logic into its own methods so that it can be
 
 🚀 *If you are observant, you will notice that SQLite incorrectly sorted the artist "AC/DC" before the artist "Aaron...". This is because SQLite's ORDER BY comparison is case-sensitive. "Almost correct" order is acceptable for this task, but if you wish, you can also sort the names case-insensitively using the tips from [this discussion](https://stackoverflow.com/a/2413833).*
 
-## Osa 2: Olioihin perustuva lähestymistapa *(perusteet, 40 %)*
+## Part 2: object-Oriented approach *(basics, 40%)*
 
-Tehtävän toisessa osassa tehtävänäsi on hyödyntää olio-ohjelmointia ja jakaa tietokantaa käyttävät operaatiot tarkoituksenmukaisesti erillisiin luokkiin ja metodeihin.
+In the second part of the exercise, your objective is to utilize object-oriented programming and appropriately divide the database operations into separate classes and methods.
 
-Ohjelman rakenteen ja arkkitehtuurin suunnittelemiseksi on hyviä tunnettuja ja [laajasti käytettyjä suunnittelumalleja (pattern)](https://en.wikipedia.org/wiki/Software_design_pattern), joita noudattamalla tulet soveltaneeksi hyviä käytäntöjä ja koodistasi tulee toivottavasti laadukasta. Ohjelmistokehittäjät noudattavat usein samoja suunnittelumalleja, mikä helpottaa muiden kirjoittamien ohjelmien ymmärtämistä ja koodauskäytäntöjen yhtenäistämistä.
+To design the structure and architecture of the program, there are well-known and [widely used design patterns](https://en.wikipedia.org/wiki/Software_design_pattern) that, when followed, will help you apply good practices and hopefully make your code high-quality. Software developers often follow the same design patterns, which makes it easier to understand programs written by others and to standardize coding practices.
 
 **DAO (Data Access Object)**
 
-Tietokantalogiikan eriyttämiseksi muusta koodista käytetään usein ns. DAO-mallia:
+To separate database logic from the rest of the code, the DAO pattern is often used:
 
 > *"A Data Access Object class can provide access to a particular data resource without coupling the resource's API to the business logic. For example, sample application classes access catalog categories, products, and items using DAO interface `CatalogDAO`."*
 >
@@ -257,7 +253,6 @@ Tietokantalogiikan eriyttämiseksi muusta koodista käytetään usein ns. DAO-ma
 **Tehtävä**
 
 Tehtäväpohjan paketissa [databases.part02](./src/main/java/databases/part02/) on valmiina luokat [`Artist`](./src/main/java/databases/part02/Artist.java), [`ArtistDAO`](./src/main/java/databases/part02/ArtistDAO.java) sekä [`ArtistAppMain`](./src/main/java/databases/part02/ArtistAppMain.java):
-
 
 1. **Artist:**
 
