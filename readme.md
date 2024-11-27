@@ -1,3 +1,6 @@
+> [!NOTE]  
+> The English translation for this exercise can be found in [this file](./readme.en.md).
+
 # SQL-tietokantojen käyttö Javasta käsin
 
 Tässä tehtävässä opettelemme muodostamaan yhteyden tietokantaan Java-ohjelmasta käsin ja tekemään yksinkertaisia CRUD-toimenpiteitä (Create, Read, Update & Delete). Tutustumme ohessa käsitteisiin kuten JDBC, DAO ja PreparedStatement.
