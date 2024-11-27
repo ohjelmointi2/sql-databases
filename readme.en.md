@@ -127,12 +127,16 @@ classDiagram
 
 Tehtäväpohja sisältää pääohjelman [**JdbcDemoMain**](./src/main/java/databases/part01/JdbcDemoMain.java). Tämä pääohjelman tarkoitus on auttaa sinua hahmottamaan ja kokeilemaan, miten yhteyksiä muodostetaan ja miten niiden avulla voidaan suorittaa kyselyitä. Voit suorittaa [pääohjelman](./src/main/java/databases/part01/JdbcDemoMain.java) joko koodieditorisi run-painikkeella tai Gradle:n avulla:
 
+## Running the main program
+
+The task template includes the main program [**JdbcDemoMain**](./src/main/java/databases/part01/JdbcDemoMain.java). The purpose of this main program is to help you understand and experiment with how connections are established and how queries can be executed using them. You can run the [main program](./src/main/java/databases/part01/JdbcDemoMain.java) either using the run button in your code editor or with Gradle:
+
 ```sh
 ./gradlew run       # Unix
 .\gradlew.bat run   # Windows
 ```
 
-Kun suoritat ohjelman, se tulostaa kaikkien tietokannassa valmiiksi olevien artistien nimet järjestettynä niiden `ArtistId`:n mukaan:
+When you run the program, it will print the names of all the artists already in the database, sorted by their `ArtistId`:
 
 ```
 AC/DC
@@ -143,32 +147,32 @@ Alice In Chains
 ...
 ```
 
-Tehtävän seuraavissa vaiheissa tätä tulostetta muutetaan hieman.
+In the next steps of the exercise, this output will be slightly modified.
 
-⭐ *Pääohjelma käyttää oletuksena SQLite-tietokantaa, joten joudut muuttamaan yhteysosoitteen tunnuksineen vastaamaan MySQL-tietokantaasi, mikäli käytät MySQL:ää.*
+⭐ *The main program uses an SQLite database by default, so you will need to change the connection URL and credentials to match your MySQL database if you are using MySQL.*
 
-💡 *Jos suoritat ohjelman VS Code:lla ja törmäät virheeseen `SQLException: path to 'data/Chinook_Sqlite.sqlite' does not exist`, avaa projekti uudestaan "Open Folder..."-valikon kautta. SQLite-tietokannan osoite on esitetty koodissa **suhteellisena polkuna** projektin päähakemistoon nähden, joten VS Code:ssa tulee olla auki päähakemisto, joka sisältää mm. tämän readme.md-tiedoston.*
+💡 *If you run the program in VS Code and encounter the error `SQLException: path to 'data/Chinook_Sqlite.sqlite' does not exist`, reopen the project through the "Open Folder..." menu. The SQLite database path is specified in the code as a **relative path** to the project's root directory, so the root directory containing this readme.md file must be open in VS Code.*
 
-## JDBC:n perusteet
+## JDBC basics
 
-Tietokantaoperaatiot tehdään JDBC:ssä kolmen keskeisen luokan avulla: **Connection**, **PreparedStatement** ja **ResultSet**. Näillä kolmella on keskeinen rooli tietokantaan yhteyden muodostamisessa, tietokantakyselyiden suorittamisessa ja tulosten käsittelyssä.
+Database operations in JDBC are performed using three key classes: **Connection**, **PreparedStatement**, and **ResultSet**. These three play a central role in establishing a connection to the database, executing queries, and handling the results.
 
-1. **[Connection (yhteys)](https://docs.oracle.com/javase/8/docs/api/java/sql/Connection.html)**
-    - Yhteys mahdollistaa sovelluksen ja tietokannan välisen vuorovaikutuksen.
-    - Yhteydenmuodostus vaatii tietokannan tiedot, kuten SQLite-tiedoston sijainnin. Se voi vaatia myös mm. tietokantapalvelimen osoitteen, käyttäjätunnuksen ja salasanan.
-    - Yhteys tulee sulkea käytön jälkeen, jotta käytössä olevat resurssit vapautuvat uudelleenkäytettäviksi.
+1. **[Connection](https://docs.oracle.com/javase/8/docs/api/java/sql/Connection.html)**
+    - The connection enables interaction between the application and the database.
+    - Establishing a connection requires database details, such as the location of the SQLite file. It may also require the database server address, username, and password.
+    - The connection should be closed after use to free up resources for reuse.
 
-2. **[PreparedStatement (SQL-lauseke)](https://docs.oracle.com/javase/8/docs/api/java/sql/PreparedStatement.html)**
-    - Tapa suorittaa SQL-kyselyitä tietokannassa Java-sovelluksessa.
-    - Mahdollistaa SQL-kyselyjen parametrien syöttämisen turvallisesti.
-    - Auttaa estämään SQL-injektiota.
+2. **[PreparedStatement](https://docs.oracle.com/javase/8/docs/api/java/sql/PreparedStatement.html)**
+    - A way to execute SQL queries in the database from a Java application.
+    - Allows for the safe input of SQL query parameters.
+    - Helps prevent SQL injection.
 
-3. **[ResultSet (tulokset)](https://docs.oracle.com/javase/8/docs/api/java/sql/ResultSet.html)**
-    - ResultSet on tietokannasta saatava tulosjoukko, joka sisältää kyselyn tulokset.
-    - ResultSetissä tiedot ovat organisoituina riveihin ja sarakkeisiin.
-    - Tulostaulukkoa käytetään tavallisesti silmukan avulla, joka kulkee läpi tulokset ja noutaa tarvittavat tiedot.
+3. **[ResultSet](https://docs.oracle.com/javase/8/docs/api/java/sql/ResultSet.html)**
+    - The ResultSet is a set of results obtained from the database, containing the query results.
+    - In the ResultSet, data is organized into rows and columns.
+    - The result set is typically used in a loop that iterates through the results and retrieves the necessary data.
 
-Nämä luokat ja niiden väliset suhteet on havainnollistettu seuraavassa kaaviossa:
+These classes and their relationships are illustrated in the following diagram:
 
 ```mermaid
 classDiagram
