@@ -1,4 +1,4 @@
-# Using SQL Databases with Java
+# Using SQL databases with Java
 
 In this exercise, we will learn how to connect to a database from a Java program and perform simple CRUD operations (Create, Read, Update & Delete). Along the way, we will get acquainted with concepts such as JDBC, DAO, and PreparedStatement.
 
