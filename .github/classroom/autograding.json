@@ -3,7 +3,7 @@
     {
       "name": "Part 1: JdbcDemoMain",
       "setup": "",
-      "run": "./gradlew run | python3 .github/classroom/part1test.py",
+      "run": "./gradlew test --tests JdbcDemoMainTest",
       "input": "",
       "output": "",
       "comparison": "exact",

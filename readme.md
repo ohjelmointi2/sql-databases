@@ -244,7 +244,14 @@ Tämä osa tehtävästä tarkastetaan tutkimalla ohjelmasi tulostetta, koska `Sy
 
 Parempi tapa on eristää logiikka omiin metodeihinsa, jotta sitä voidaan kutsua ohjelman muista osista tai muista ohjelmista. Ohjelman jakaminen osiin helpottaa siis sen **testaamista** ja tekee koodista **uudelleenkäytettävämpää** ja **ylläpidettävämpää**.
 
-🚀 *Jos olet tarkkana, huomaat että yllä SQLite järjesti artistin "AC/DC" virheellisesti ennen artistia "Aaron...". Tämä johtuu siitä, että SQLite:n ORDER BY -vertailu on kirjainkoosta riippuvainen. "Lähes oikea" järjestys kelpaa tämän tehtävän osalta, mutta voit halutessasi järjestää nimet myös kirjainkoosta riippumatta [tämän keskustelun](https://stackoverflow.com/a/2413833) vinkkien mukaan.*
+Tekemäsi muutokset testataan yksikkötesteillä, jotka on kirjoitettu [`JdbcDemoMainTest`-testiluokkaan](./src/test/java/databases/part01/JdbcDemoMainTest.java). Voit suorittaa testit joko koodieditorisi testaustyökalulla ([VS Code](https://code.visualstudio.com/docs/java/java-testing), [Eclipse](https://www.vogella.com/tutorials/JUnitEclipse/article.html)) tai [Gradle-automaatiotyökalulla](https://docs.gradle.org/current/userguide/java_testing.html):
+
+```sh
+./gradlew test --tests JdbcDemoMainTest      # unix
+.\gradlew.bat test --tests JdbcDemoMainTest  # windows
+```
+
+🚀 *Jos olet tarkkana, saatat huomata, että SQLite järjestää oletuksena artistin "AC/DC" virheellisesti ennen artistia "Aaron...". Tämä johtuu siitä, että SQLite:n ORDER BY -vertailu on kirjainkoosta riippuvainen. "Lähes oikea" järjestys kelpaa tämän tehtävän osalta, mutta voit halutessasi järjestää nimet myös kirjainkoosta riippumatta [tämän keskustelun](https://stackoverflow.com/a/2413833) vinkkien mukaan.*
 
 
 ## Osa 2: Olioihin perustuva lähestymistapa *(perusteet, 40 %)*
@@ -301,7 +308,7 @@ Tehtävän tässä osassa sinun tulee toteuttaa [`ArtistDAO`-luokkaan](./src/mai
 
 Voit suorittaa [`ArtistAppMain`-luokan](./src/main/java/databases/part02/ArtistAppMain.java) koodieditorillasi. Aluksi kyseinen luokka ei tulosta mitään, mutta toteutettuasi DAO-luokan tulosteen pitäisi olla sama kuin tehtävän edellisessä osassa.
 
-DAO-luokkasi testataan yksikkötesteillä, jotka on kirjoitettu [`ArtistDAOTest`-testiluokkaan](./src/test/java/databases/part02/ArtistDAOTest.java). Voit suorittaa testit joko koodieditorisi testaustyökalulla ([VS Code](https://code.visualstudio.com/docs/java/java-testing), [Eclipse](https://www.vogella.com/tutorials/JUnitEclipse/article.html)) tai [Gradle-automaatiotyökalulla](https://docs.gradle.org/current/userguide/java_testing.html):
+DAO-luokkasi testataan yksikkötesteillä, jotka on kirjoitettu [`ArtistDAOTest`-testiluokkaan](./src/test/java/databases/part02/ArtistDAOTest.java). Voit suorittaa testit joko koodieditorisi testaustyökalulla tai Gradle-automaatiotyökalulla:
 
 ```sh
 ./gradlew test --tests ArtistDAOTest      # unix
