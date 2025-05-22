@@ -234,6 +234,13 @@ This part of the task will be checked by examining your program's output, as tes
 
 A better approach is to isolate the logic into its own methods so that it can be called from other parts of the program or other programs. Dividing the program into parts thus makes it easier to **test** and makes the code more **reusable** and **maintainable**.
 
+Your changes in the class will be tested with unit tests written in the [`JdbcDemoMainTest`](./src/test/java/databases/part01/JdbcDemoMainTest.java) test class. You can run the tests using your code editor's testing tool ([VS Code](https://code.visualstudio.com/docs/java/java-testing), [Eclipse](https://www.vogella.com/tutorials/JUnitEclipse/article.html)) or the [Gradle automation tool](https://docs.gradle.org/current/userguide/java_testing.html):
+
+```sh
+./gradlew test --tests JdbcDemoMainTest      # unix
+.\gradlew.bat test --tests JdbcDemoMainTest  # windows
+```
+
 🚀 *If you are observant, you will notice that SQLite incorrectly sorted the artist "AC/DC" before the artist "Aaron...". This is because SQLite's ORDER BY comparison is case-sensitive. "Almost correct" order is acceptable for this task, but if you wish, you can also sort the names case-insensitively using the tips from [this discussion](https://stackoverflow.com/a/2413833).*
 
 ## Part 2: object-Oriented approach *(basics, 40%)*
@@ -289,7 +296,7 @@ In this part of the exercise, you need to implement the `getArtists` and `getArt
 
 You can run the [`ArtistAppMain`](./src/main/java/databases/part02/ArtistAppMain.java) class in your code editor. Initially, this class will not print anything, but after implementing the DAO class, the output should be the same as in the previous part of the task.
 
-Your DAO class will be tested with unit tests written in the [`ArtistDAOTest`](./src/test/java/databases/part02/ArtistDAOTest.java) test class. You can run the tests using your code editor's testing tool ([VS Code](https://code.visualstudio.com/docs/java/java-testing), [Eclipse](https://www.vogella.com/tutorials/JUnitEclipse/article.html)e) or the [Gradle automation tool](https://docs.gradle.org/current/userguide/java_testing.html):
+Your DAO class will be tested with unit tests written in the [`ArtistDAOTest`](./src/test/java/databases/part02/ArtistDAOTest.java) test class. You can run the tests using your code editor's testing tool or with Gradle:
 
 ```sh
 ./gradlew test --tests ArtistDAOTest      # unix
