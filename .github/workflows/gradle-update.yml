@@ -1,0 +1,103 @@
+name: Update Gradle to latest version
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    outputs:
+      gradle-version: ${{ steps.get_version.outputs.latest_version }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Get latest Gradle version
+        id: get_version
+        run: |
+          LATEST=$(curl -s https://services.gradle.org/versions/current | jq -r .version)
+          echo "latest_version=$LATEST" >> $GITHUB_OUTPUT
+
+      - name: Update Gradle Wrapper
+        run: |
+          gradle wrapper --gradle-version ${{ steps.get_version.outputs.latest_version }}
+
+      - name: Store Gradle Wrapper Artifact for next steps
+        uses: actions/upload-artifact@v4
+        with:
+          name: gradle
+          path: |
+            gradlew
+            gradlew.bat
+            gradle/wrapper/
+
+  verify:
+    needs: update
+    if: success()  # only run if upgrade succeeded
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Download Gradle Wrapper Artifact
+        uses: actions/download-artifact@v5
+        with:
+          name: gradle
+          path: .
+
+      - name: Build on Windows (skip tests for completed assignment)
+        if: runner.os == 'Windows'
+        run: .\gradlew.bat build -x test --warning-mode=fail
+
+      - name: Build on Linux (skip tests for completed assignment)
+        if: runner.os != 'Windows'
+        run: ./gradlew build -x test --warning-mode=fail
+
+  commit:
+    needs: [update, verify]
+    if: success()
+    runs-on: ubuntu-latest
+
+    env:
+      GRADLE_VERSION: ${{ needs.update.outputs.gradle-version }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: true
+
+      - name: Get Gradle Wrapper Artifact From Previous Job
+        uses: actions/download-artifact@v5
+        with:
+          name: gradle
+          path: .
+
+      - name: Commit and push Gradle Wrapper
+        run: |
+          echo "Pushing Gradle Wrapper version $GRADLE_VERSION"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add gradlew gradlew.bat gradle/wrapper/
+          git commit -m "Update Gradle Wrapper to $GRADLE_VERSION"
+          git push origin HEAD
