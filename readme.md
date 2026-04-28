@@ -55,7 +55,7 @@ dependencies {
 
     // MySQL driver: https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
     // Uncomment the following line, if you wish to use a MySQL database:
-    // implementation 'com.mysql:mysql-connector-j:8.+'
+    // implementation 'com.mysql:mysql-connector-j:9.+'
 }
 ```
 

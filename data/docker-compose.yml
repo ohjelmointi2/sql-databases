@@ -1,20 +1,29 @@
-# This is a basic docker-compose.yml file for a MySQL
-# database borrowed from https://hub.docker.com/_/mysql.
-# Use root/example as user/password credentials
-version: '3.1'
+# This is a basic docker-compose.yml file for a MySQL database. It uses the
+# official MySQL image from Docker Hub: https://hub.docker.com/_/mysql.
+#
+# To run this, execute `docker-compose up` in the same directory as this file.
+# Use root/example as user/password credentials.
+#
+# To connect to your MySQL container and use the MySQL command line client, run:
+# `docker exec -it javacourse-mysql mysql -u root -p`.
 
 services:
 
   db:
     image: mysql
-    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
-    # (this is just an example, not intended to be a production configuration)
-    command: --default-authentication-plugin=mysql_native_password
     restart: always
+    container_name: javacourse-mysql
     environment:
+      # The password for the MySQL root user. Not to be used in real environments:
       MYSQL_ROOT_PASSWORD: example
     ports:
-      # <Port exposed to the host>:< MySQL port running inside container>
-      - '3306:3306'
+      # Exposes the MySQL port to the host machine:
+      - 127.0.0.1:3306:3306
     volumes:
+      # Mounts the initialization scripts into the container:
       - ./:/docker-entrypoint-initdb.d
+      # Saves the MySQL data to a named volume on the host machine:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
