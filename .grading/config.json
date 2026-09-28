@@ -2,32 +2,20 @@
   "tests": [
     {
       "name": "Part 1: JdbcDemoMain",
-      "setup": "",
       "run": "./gradlew test --tests JdbcDemoMainTest",
-      "input": "",
-      "output": "",
-      "comparison": "exact",
-      "timeout": 1,
+      "timeout": "1m",
       "points": 20
     },
     {
       "name": "Part 2: ArtistDAO",
-      "setup": "",
       "run": "./gradlew test --tests ArtistDAOTest",
-      "input": "",
-      "output": "",
-      "comparison": "exact",
-      "timeout": 1,
+      "timeout": "1m",
       "points": 40
     },
     {
       "name": "Part 3: AlbumDAO",
-      "setup": "",
       "run": "./gradlew test --tests AlbumDAOTest",
-      "input": "",
-      "output": "",
-      "comparison": "exact",
-      "timeout": 1,
+      "timeout": "1m",
       "points": 40
     }
   ]

@@ -1,0 +1,36 @@
+name: Autograding workflow
+
+on:
+  - push
+  - workflow_dispatch
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  build:
+    name: Autograding
+    runs-on: ubuntu-latest
+    if: (github.event_name != 'push' || github.event.head_commit.message != 'Initial commit')
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: 'temurin'
+          java-version: 'latest'
+
+      # Make sure compilation succeeds before attempting to run autograding
+      - name: Compile source code
+        run: ./gradlew compileJava compileTestJava
+        timeout-minutes: 2
+
+      # Run tests and generate grading report
+      - name: Autograding
+        uses: ohjelmointi2/grading-action@v0
+        timeout-minutes: 2
+        with:
+          test_suite: .grading/config.json
+
