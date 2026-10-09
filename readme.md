@@ -1,4 +1,4 @@
-> [!NOTE]  
+> [!NOTE]
 > The English translation for this exercise can be found in [this file](./readme.en.md).
 
 # SQL-tietokantojen käyttö Javasta käsin
@@ -244,7 +244,7 @@ Tämä osa tehtävästä tarkastetaan tutkimalla ohjelmasi tulostetta, koska `Sy
 
 Parempi tapa on eristää logiikka omiin metodeihinsa, jotta sitä voidaan kutsua ohjelman muista osista tai muista ohjelmista. Ohjelman jakaminen osiin helpottaa siis sen **testaamista** ja tekee koodista **uudelleenkäytettävämpää** ja **ylläpidettävämpää**.
 
-Tekemäsi muutokset testataan yksikkötesteillä, jotka on kirjoitettu [`JdbcDemoMainTest`-testiluokkaan](./src/test/java/databases/part01/JdbcDemoMainTest.java). Voit suorittaa testit joko koodieditorisi testaustyökalulla ([VS Code](https://code.visualstudio.com/docs/java/java-testing), [Eclipse](https://www.vogella.com/tutorials/JUnitEclipse/article.html)) tai [Gradle-automaatiotyökalulla](https://docs.gradle.org/current/userguide/java_testing.html):
+Tekemäsi muutokset testataan yksikkötesteillä, jotka on kirjoitettu [`JdbcDemoMainTest`-testiluokkaan](./src/test/java/databases/part01/JdbcDemoMainTest.java). Voit suorittaa testit joko [koodieditorisi testaustyökalulla](https://code.visualstudio.com/docs/java/java-testing) tai [Gradle-automaatiotyökalulla](https://docs.gradle.org/current/userguide/java_testing.html):
 
 ```sh
 ./gradlew test --tests JdbcDemoMainTest      # unix
@@ -386,7 +386,7 @@ Ympäristömuuttujat ovat eräänlainen käyttöjärjestelmäkohtainen Map-tieto
 
 ### Ympäristömuuttujien asettaminen
 
-Voit asettaa VS Code:ssa ympäristömuuttujan muuttamalla ["Run and debug"-asetuksia](https://code.visualstudio.com/docs/java/java-debugging#_configuration-options) (ks. kohta `env`). Eclipsessä voit lisätä ohjelmallesi ympäristömuuttujia tämän [Stack Overflow -ketjun](https://stackoverflow.com/a/12810433) ohjeiden mukaisesti.
+Voit asettaa VS Code:ssa ympäristömuuttujan muuttamalla ["Run and debug"-asetuksia](https://code.visualstudio.com/docs/java/java-debugging#_configuration-options) (ks. kohta `env`).
 
 Vaihtoehtoisesti ympäristömuuttujia voidaan määritellä koko järjestelmän tasolla:
 

@@ -1,4 +1,7 @@
 {
   "github.copilot.nextEditSuggestions.enabled": false,
-  "github.copilot.enable": { "java": false }
+  "github.copilot.enable": {
+    "java": false
+  },
+  "editor.formatOnSave": true
 }

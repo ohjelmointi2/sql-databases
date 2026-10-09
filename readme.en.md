@@ -234,7 +234,7 @@ This part of the task will be checked by examining your program's output, as tes
 
 A better approach is to isolate the logic into its own methods so that it can be called from other parts of the program or other programs. Dividing the program into parts thus makes it easier to **test** and makes the code more **reusable** and **maintainable**.
 
-Your changes in the class will be tested with unit tests written in the [`JdbcDemoMainTest`](./src/test/java/databases/part01/JdbcDemoMainTest.java) test class. You can run the tests using your code editor's testing tool ([VS Code](https://code.visualstudio.com/docs/java/java-testing), [Eclipse](https://www.vogella.com/tutorials/JUnitEclipse/article.html)) or the [Gradle automation tool](https://docs.gradle.org/current/userguide/java_testing.html):
+Your changes in the class will be tested with unit tests written in the [`JdbcDemoMainTest`](./src/test/java/databases/part01/JdbcDemoMainTest.java) test class. You can run the tests using your [code editor's testing tool](https://code.visualstudio.com/docs/java/java-testing) or the [Gradle automation tool](https://docs.gradle.org/current/userguide/java_testing.html):
 
 ```sh
 ./gradlew test --tests JdbcDemoMainTest      # unix
@@ -367,7 +367,7 @@ Environment variables are a kind of operating system-specific Map data structure
 
 ### Setting environment variables
 
-You can set an environment variable in VS Code by modifying the ["Run and debug" settings](https://code.visualstudio.com/docs/java/java-debugging#_configuration-options) (see the `env` section). In Eclipse, you can add environment variables to your program following the instructions in this [Stack Overflow thread](https://stackoverflow.com/a/12810433).
+You can set an environment variable in VS Code by modifying the ["Run and debug" settings](https://code.visualstudio.com/docs/java/java-debugging#_configuration-options) (see the `env` section).
 
 Alternatively, environment variables can be defined at the system level:
 
