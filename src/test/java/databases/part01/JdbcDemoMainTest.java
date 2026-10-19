@@ -49,7 +49,7 @@ public class JdbcDemoMainTest {
         JdbcDemoMain.main(new String[] {});
         String output = outputStreamCaptor.toString();
 
-        // Check that the artitsts are ordered by their names
+        // Check that the artists are ordered by their names
         checkOrderOfArtists(output, "AC/DC", "Metallica");
         checkOrderOfArtists(output, "Aaron Goldberg", "Alanis Morissette");
         checkOrderOfArtists(output, "Aaron Copland & London Symphony Orchestra", "Metallica");

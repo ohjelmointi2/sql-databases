@@ -101,7 +101,7 @@ public class AlbumDAO {
          * See hints for the methods above.
          *
          * Remember to use the `connectionString` instead of hard coding it, otherwise
-         * your tetss will be deleting albums from your actual database!
+         * your tests will be deleting albums from your actual database!
          */
         return false;
     }
